@@ -17,7 +17,7 @@ namespace CodeFirst1.Controllers
 
         public ActionResult Index(int? page)
         {
-
+            // Hello I am here.
             // get database
             var db = new Model1();
             var products = db.Products.ToList();
