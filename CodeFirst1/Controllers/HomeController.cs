@@ -17,9 +17,10 @@ namespace CodeFirst1.Controllers
 
         public ActionResult Index(int? page)
         {
-
+            // Hello I am here.
             // get database
             var db = new Model1();
+            // COmmit 2
             var products = db.Products.ToList();
             // Map to view model
             var productViewMosels = new List<ProductViewModel>();
