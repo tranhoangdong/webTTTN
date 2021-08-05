@@ -20,6 +20,7 @@ namespace CodeFirst1.Controllers
             // Hello I am here.
             // get database
             var db = new Model1();
+            // COmmit 2
             var products = db.Products.ToList();
             // Map to view model
             var productViewMosels = new List<ProductViewModel>();
