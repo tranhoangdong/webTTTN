@@ -17,7 +17,7 @@ namespace CodeFirst1.Controllers
 
         public ActionResult Index(int? page)
         {
-            // Hello I am here.
+            // Hello I am here 2.
             // get database
             var db = new Model1();
             // COmmit 2
