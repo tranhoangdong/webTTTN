@@ -1,0 +1,55 @@
+﻿
+@model List<CodeFirst1.ViewModels.OrderDetails>
+
+@foreach (var item in Model)
+{
+    <div id="ct_sp" class="ct-sp-@item.ProductId-@item.CategoryId" style="font-size:16px; border-bottom:1px solid #808080;   ">
+        <div class="row" style="margin-bottom: -94px;width: 211px;float:left;margin-left: 480px; height:auto;">
+            @if (item.Status == 0)
+            {
+
+                <div style="float:left;width:73px;">
+                    <input class="sl-sanpham-chitiethoadon" id="ip-@item.ProductId-@item.CategoryId" type="number" style="width:50px !important;height: 28px;" value="@item.Quantity" min="1" max="@(item.SoLuongKho + item.Quantity)" />
+                </div>
+                <div style="float:left;width:75px;">
+                    <button class="btn btn-primary UpdateProduct" style="height: 28px;
+    margin-left: -15px;" data-idsp="@item.ProductId" data-idCategory="@item.CategoryId" data-idhd="@item.OrderId">
+                        Cập nhật
+                    </button>
+                </div>
+                <div style="float:left;width:30px;">
+                    <button class="btn btn-primary DeleteProduct" data-idsanpham="@item.ProductId" data-idCategoryx="@item.CategoryId" data-iddonhang="@item.OrderId" style="margin-left: -5px;
+    height: 28px;">
+                        xóa
+                    </button>
+                </div>
+            }
+            else
+            {
+                <div></div>
+            }
+        </div>
+        <div style="height:100%;width:120px; float:left;">
+            <img src="~/image/AnhDienThoai/@item.image" style="width:100%; height:100px;" />
+        </div>
+        <div style="float:left; width:240px; height:auto;padding:10px;">
+            <h5 style="color:blue;font-size:19px;font-weight:bold;padding-top:0px;">@item.Name</h5>
+            <h5>SP: @item.ProductId</h5>
+            <span style="font-weight:bold;">  @String.Format("{0:0,0}", (Decimal.Round(item.UnitPrice, 0)))  đ</span>
+            <h5>Số lượng đặt hàng : <span class="sldh-@item.ProductId-@item.CategoryId"> @item.Quantity  </span></h5>
+            <h5 style="font-weight:bold;">Một số chi tiết chính:</h5>
+            @if (item.CategoryId == 1)
+            {
+                <h5>RAM: @item.Ram</h5>
+                <h5>CPU: @item.CPU</h5>
+                <h5>Memory: @item.InternalMemory</h5>
+                <h5>Battery: @item.Battery</h5>
+                <span>-----------------------</span>
+            }
+
+            <h5>SL: <span class="sl-@item.ProductId-@item.CategoryId"> @item.Quantity </span> X  <span class="gia-tien-@item.Id-@item.CategoryId">@String.Format("{0:0,0}", (Decimal.Round(item.UnitPrice, 0)))  </span> = <span class="tong-noi-sp-@item.ProductId-@item.CategoryId"> @String.Format("{0:0,0}", (Decimal.Round((item.UnitPrice * item.Quantity).Value, 0)))</span> đ </h5>
+            <span>-----------------------</span>
+            <h5 style="color:blue;">Kho lấy hàng: kho trung tâm</h5>
+        </div>
+    </div>
+}

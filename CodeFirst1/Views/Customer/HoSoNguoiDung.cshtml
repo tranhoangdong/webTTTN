@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Hồ sơ</title>
+    <link href="~/XuatPhieuCSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/XuatPhieuCSS/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/custom/Loading.css" rel="stylesheet" />
+    <link href="~/Content/custom/ThongTinCaNhan.css" rel="stylesheet" />
+
+    <link href="~/Content/Toast/toastyfy.css" rel="stylesheet" />
+    <link href="~/Content/Toast/Default.css" rel="stylesheet" />
+    <link href="~/Content/Toastify/Toastr.css" rel="stylesheet" />
+    <link href="~/Content/Toastify/toaststyle.css" rel="stylesheet" />
+</head>
+@model CodeFirst1.ViewModels.ThongTin
+<body>
+    <h2 style="text-shadow: 4px 4px 4px 4px; color:red;">Thông tin cá nhân</h2>
+    @if (Session["UserName"] == null)
+    {
+
+        <span class="glyphicon glyphicon-blackboard erchuadn">&nbsp;@Model.LoiDangNhap</span>
+        <div class="spinner-border looading" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    }
+    @if (Session["UserName"] != null)
+    {
+        <div id="ho-so">
+            <div id="khung-ho-so-trai">
+                <span class="glyphicon glyphicon-user cltieude" aria-hidden="true">&nbsp;<span class="chu-tieu-de">Tên</span></span>
+                <br />
+                <br />
+                <span style="font-size:16px;" id="ten-tk-hientai">   &nbsp;&nbsp;&nbsp;  @Model.Account</span>
+                <br />
+                <br />
+                <span class="glyphicon glyphicon-earphone cltieude" aria-hidden="true">&nbsp;<span class="chu-tieu-de">Tên hiển thị</span></span>
+                <br />
+                <br />
+                <span style="font-size:16px;" id="â">  &nbsp;&nbsp;&nbsp;@Model.Name</span>
+                <button id="cb-show" class="btn btn-primary doi-tt">Chỉnh sửa thông tin</button>
+            </div>
+            <div id="khung-ho-so-giua">
+                <span class="glyphicon glyphicon-comment cltieude" aria-hidden="true">&nbsp;<span class="chu-tieu-de">Địa chỉ Email</span></span>
+                <br />
+                <br />
+                <span style="font-size:16px;" id="mail-hien-tai">   &nbsp;&nbsp;&nbsp;@Model.Email</span>
+                <br />
+                <br />
+                <span class="glyphicon glyphicon-earphone cltieude" aria-hidden="true">&nbsp;<span class="chu-tieu-de">Số điện thoại</span></span>
+                <br />
+                <br />
+                <span style="font-size:16px;" id="sdt-hien-tai">  &nbsp;&nbsp;&nbsp;@Model.Phone</span>
+
+            </div>
+            <div id="khung-ho-so-phai">
+                <span class="glyphicon glyphicon-list-alt cltieude" aria-hidden="true">&nbsp;<span class="chu-tieu-de">Điểm tích lũy</span></span>
+                <br />
+                <br />
+                <span style="font-size:16px;">  &nbsp;&nbsp;&nbsp; @Model.Point</span>
+            </div>
+        </div>
+        <div id="khung-chinh-sua-tt">
+            <div class="row r-sua-tt">
+                <div class="col-3" style="text-align:right;font-size:16px;">
+                    Tên:
+                </div>
+                <div class="col-9">
+                    <input type="text" name="tennguoidung" class="dinh-dang-ip" value="@Model.Account" id="tenngdung" />
+                </div>
+
+            </div>
+            <span id="hien-thi-loi-ten"></span>
+            <div class="row r-sua-tt">
+                <div class="col-3" style="text-align:right;font-size:16px;">
+                    Email:
+                </div>
+                <div class="col-9">
+                    <input type="text" name="Email" class="dinh-dang-ip" value="@Model.Email" id="emailngdung" />
+                </div>
+
+            </div>
+            <span id="hien-thi-email"></span>
+            <div class="row r-sua-tt">
+                <div class="col-3" style="text-align:right;font-size:16px;">
+                    SDT
+                </div>
+                <div class="col-9">
+                    <input type="text" name="SDT" class="dinh-dang-ip" value="@Model.Phone" id="sdtngdung" />
+                </div>
+
+            </div>
+            <span id="hien-thi-sdt"></span>
+            <div class="row r-sua-tt">
+                <div class="col-3" style="text-align:right;font-size:16px;">
+                    Mật Khẩu:
+                </div>
+                <div class="col-9">
+                    <input type="text" name="TenHienThi" class="dinh-dang-ip" value="@Model.Pass" id="pass" />
+                </div>
+
+            </div>
+
+            <span id="hien-thi-loi-diachi"></span>
+            <div style="float:right;"><button id="bt-luuuu" data-idngdung="@Model.Id" class="btn btn-primary luuu-thay-doi">Lưu thay đổi</button>  </div>
+            <span id="loitt" style="     font-size: 13px;
+    margin-left: 207px;color:red;"></span>
+        </div>
+    }
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.slim.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/XuatPhieuCSS/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/XuatPhieuCSS/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/XuatPhieuCSS/jquery.validate.js"></script>
+    <script src="~/Scripts/Toastify/Toaster.js"></script>
+    <script src="~/Scripts/Toastify/toastify.js"></script>
+    <script src="~/Scripts/Toastify/umd.js"></script>
+    <script src="~/XuatPhieuCSS/jquery.validate.min.js"></script>
+    <script src="~/Scripts/custom/HoSoNguoiDung.js"></script>
+
+</body>
+</html>

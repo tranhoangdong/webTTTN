@@ -1,0 +1,311 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Nhóm TTTN</title>
+    <!-- all css here -->
+    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/Content/assets/css/animate.css">
+    <link rel="stylesheet" href="~/Content/assets/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/themify-icons.css">
+    <link rel="stylesheet" href="~/Content/assets/css/pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="~/Content/assets/css/icofont.css">
+    <link rel="stylesheet" href="~/Content/assets/css/meanmenu.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/jquery-ui.css">
+    <link rel="stylesheet" href="~/Content/assets/css/bundle.css">
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <link rel="stylesheet" href="~/Content/assets/css/responsive.css" />
+    <!--fontawesome-->
+    <link href="~/Content/fontawesome/all.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/all.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/brands.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/fontawesome.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/brands.min.css" rel="stylesheet" />
+    <link href="~/Content/fontawesome/fontawesome.min.css" rel="stylesheet" />
+    <!--end-->
+    <link href="~/Content/Toast/toastyfy.css" rel="stylesheet" />
+    <link href="~/Content/Toast/Default.css" rel="stylesheet" />
+    <link href="~/Content/Toastify/Toastr.css" rel="stylesheet" />
+    <link href="~/Content/Toastify/toaststyle.css" rel="stylesheet" />
+    <script src="Content/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+    <link href="~/Content/assets/css/Login.css" rel="stylesheet" />
+    <link href="~/Content/assets/css/menu-bot.css" rel="stylesheet" />
+    <link href="~/Content/autocomplete/autocomplete.css" rel="stylesheet" />
+    @Styles.Render("~/Content/sitecss")
+    @using CodeFirst1.Helpers;
+    @{
+        var manufactureViewModels = DataHelper.GetManufacturers();
+        var AccessorieViewModels = DataHelper.Getaccessories();
+        var getCart = DataHelper.GetCarts();
+    }
+</head>
+<body>
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- header start -->
+    <header>
+        <div class="header-top-furniture wrapper-padding-2 res-header-sm">
+            <div class="container-fluid">
+                <div class="header-bottom-wrapper">
+                    <a href="/Home">
+                        @*<img src="~/image/AnhDienThoai/logo1.jpg" alt="" style="width: 270px;height: 109px;">*@
+                    </a>
+                    <div class="menu-style-2 furniture-menu menu-hover" style="margin-left:61px;">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="/Home/Index"><i class="ti-home" style="font-size:27px;"></i>&nbsp; Trang chủ</a>
+                                </li>
+                                <li>
+                                    <a href="#" id="listproducts"><i class="ti-desktop" style="font-size:27px;"></i>Sản phẩm</a>
+                                    <div class="category-menu-dropdown shop-menu">
+                                        @foreach (var manufactureViewModel in manufactureViewModels)
+                                        {
+                                            <div class="category-dropdown-style category-common2 mb-30" id="dell">
+                                                <h4 class="categories-subtitle"> @manufactureViewModel.Name</h4>
+                                                <ul>
+                                                    @foreach (var manufacturerProduct in manufactureViewModel.ManufacturerProducts)
+                                                    {
+                                                        <li id="@manufacturerProduct.Id"> <a href="/Home/Detail/@manufacturerProduct.Id"> @manufacturerProduct.Name </a> </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        }
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="ti-mouse" style="font-size:27px;"></i>Phụ kiện điện thoại</a>
+                                    <ul class="single-dropdown">
+                                        @foreach (var item in AccessorieViewModels)
+                                        {
+                                            <li><a href="/Home/SearchAccessories/@item.Id">@item.Name</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                                <li><a href="/Home/HienThiKhuyenMai"><i class="ti-gift" style="font-size:27px;"></i>Khuyến mãi</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="header-cart">
+                        <a class="icon-cart-furniture" href="#">
+                            <i class="ti-shopping-cart"></i>
+                            <span class="shop-count-furniture green">@getCart.Sum(x => x.Quantity)</span>
+                        </a>
+                        <ul class="cart-dropdown">
+                            @foreach (var cart in getCart)
+                            {
+                                <li class="single-product-cart">
+                                    <div class="cart-img">
+                                        <a href="#"><img src="~/image/AnhDienThoai/@cart.Image" style="width:96px; height:84px;" alt=""></a>
+                                    </div>
+                                    <div class="cart-title">
+                                        <h5><a href="#"> @cart.NameProduct</a></h5>
+                                        <span> @String.Format("{0:0,0}", cart.Price) x @cart.Quantity</span>
+                                    </div>
+                                    <div class="cart-delete">
+                                    </div>
+                                </li>
+                            }
+                            <li class="cart-space">
+                                <div class="cart-sub">
+                                    <h4>Tổng:</h4>
+                                </div>
+                                <div class="cart-price">
+                                    <h4>@String.Format("{0:0,0}", getCart.Sum(x => x.IntoMoney)) VNĐ</h4>
+                                </div>
+                            </li>
+                            <li class="cart-btn-wrapper">
+                                <a class="cart-btn btn-hover" href="/Cart/Xemgiohang">view cart</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mobile-menu-area d-md-block col-md-12 col-lg-12 col-12 d-lg-none d-xl-none">
+                        <div class="mobile-menu">
+                            <nav id="mobile-menu-active">
+                                <ul class="menu-overflow">
+                                    <li>
+                                        <a href="#"></i> HOME</a>
+                                        <ul>
+                                            <li><a href="index.html">Fashion</a></li>
+                                            <li><a href="index-fashion-2.html">Fashion style 2</a></li>
+                                            <li><a href="index-fruits.html">Fruits</a></li>
+                                            <li><a href="index-book.html">book</a></li>
+                                            <li><a href="index-electronics.html">electronics</a></li>
+                                            <li><a href="index-electronics-2.html">electronics style 2</a></li>
+                                            <li><a href="index-food.html">food & drink</a></li>
+                                            <li><a href="index-furniture.html">furniture</a></li>
+                                            <li><a href="index-handicraft.html">handicraft</a></li>
+                                            <li><a href="index-smart-watch.html">smart watch</a></li>
+                                            <li><a href="index-sports.html">sports</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">pages</a>
+                                        <ul>
+                                            <li><a href="about-us.html">about us</a></li>
+                                            <li><a href="menu-list.html">menu list</a></li>
+                                            <li><a href="login.html">login</a></li>
+                                            <li><a href="register.html">register</a></li>
+                                            <li><a href="cart.html">cart page</a></li>
+                                            <li><a href="checkout.html">checkout</a></li>
+                                            <li><a href="wishlist.html">wishlist</a></li>
+                                            <li><a href="contact.html">contact</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">shop</a>
+                                        <ul>
+                                            <li><a href="shop-grid-2-col.html"> grid 2 column</a></li>
+                                            <li><a href="shop-grid-3-col.html"> grid 3 column</a></li>
+                                            <li><a href="shop.html">grid 4 column</a></li>
+                                            <li><a href="shop-grid-box.html">grid box style</a></li>
+                                            <li><a href="shop-list-1-col.html"> list 1 column</a></li>
+                                            <li><a href="shop-list-2-col.html">list 2 column</a></li>
+                                            <li><a href="shop-list-box.html">list box style</a></li>
+                                            <li><a href="product-details.html">tab style 1</a></li>
+                                            <li><a href="product-details-2.html">tab style 2</a></li>
+                                            <li><a href="product-details-3.html"> tab style 3</a></li>
+                                            <li><a href="product-details-4.html">sticky style</a></li>
+                                            <li><a href="product-details-5.html">sticky style 2</a></li>
+                                            <li><a href="product-details-6.html">gallery style</a></li>
+                                            <li><a href="product-details-7.html">gallery style 2</a></li>
+                                            <li><a href="product-details-8.html">fixed image style</a></li>
+                                            <li><a href="product-details-9.html">fixed image style 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">BLOG</a>
+                                        <ul>
+                                            <li><a href="blog.html">blog 3 colunm</a></li>
+                                            <li><a href="blog-2-col.html">blog 2 colunm</a></li>
+                                            <li><a href="blog-sidebar.html">blog sidebar</a></li>
+                                            <li><a href="blog-details.html">blog details</a></li>
+                                            <li><a href="blog-details-sidebar.html">blog details 2</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="contact.html"> Contact  </a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom-furniture wrapper-padding-2 border-top-3">
+            <div class="container-fluid">
+                <div class="furniture-bottom-wrapper">
+                    <div class="furniture-login">
+                        @if (Session["UserId"] != null)
+                        {
+                            <ul>
+                                <li>Xin chào: <a href="/Customer/Index"><i class="ti-face-smile"></i> @Session["UserName"] </a></li>
+                                <li><a href="/Login/LogOut"><i class="ti-power-off"></i> Đăng xuất </a></li>
+                            </ul>
+                        }
+                        @if (Session["UserId"] == null)
+                        {
+                            <ul>
+                                <li>
+                                    <i class="ti-control-forward"></i>: <a href="/Login/Index"><i class="ti-face-smile"></i> Đăng nhập </a>
+                                </li>
+                                <li><a href="/Login/Register"><i class="ti-power-off"></i> Đăng ký </a></li>
+                            </ul>
+                        }
+                    </div>
+                    <div class="furniture-search">
+                        <form autocomplete="off" action="#">
+                            <input id="myInput" type="text" name="myCountry" placeholder="I am Searching for . . ">
+                            <button type="submit">
+                                <i class="ti-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="furniture-wishlist">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- header end -->
+    <div class="shop-page-wrapper shop-page-padding ptb-100">
+        <div class="container-fluid">
+            <div class="row">
+                @RenderSection("Left", false)
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div class="thong-tin-cua-hang">
+        <i class="glyphicon glyphicon-home" style="color:white;"></i><span>&nbsp; Thông tin về cửa hàng</span>
+    </div>
+    <div id="menu-bot">
+        <hr />
+        <div style=" font-size: 95%;">
+            <div style="width: 16%; float:left;position:relative;">
+               
+            </div>
+            <div class="gioithieu">
+                <span class="tencty"> Cửa hàng</span>  cửa hàng điện thoại di động Hoàng ĐôngNew Style<br />
+                <span class="tencty"> Số điện thoại:</span> 0913928607<br />
+                <span class="tencty">  Email:</span>  <a href="#">hoangdong@gmail.com</a><br />
+                <span class="tencty">  Website: </span><a href="#"></a><br />
+                <span class="tencty"> Designed by:</span>   <a href="#" title="Trần Hoàng Đông">Hoàng Đông</a> - 2020
+
+            </div>
+            <div style="width: 814px;
+    margin-top: -206px;
+    float: right;
+    position: relative;
+    border: 1px solid black;
+    height: 262px;">
+                <img src="~/image/anhcuahang.jpg" width="814" height="262" />
+            </div>
+        </div>
+    </div>
+    <!-- modal -->
+    <!-- modal -->
+    <!-- all js here -->
+
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/assets/js/popper.js"></script>
+    <script src="~/Content/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/jquery.magnific-popup.min.js"></script>
+    <!--start unobtrusive - validate-->
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <!--end unobtrusive - validate-->
+    <script src="~/Content/assets/js/isotope.pkgd.min.js"></script>
+    <script src="~/Content/assets/js/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Content/assets/js/jquery.counterup.min.js"></script>
+    <script src="~/Content/assets/js/waypoints.min.js"></script>
+    <script src="~/Content/assets/js/ajax-mail.js"></script>
+    <script src="~/Content/assets/js/owl.carousel.min.js"></script>
+    <script src="~/Content/assets/js/plugins.js"></script>
+    <script src="~/Content/assets/js/main.js"></script>
+    <script src="~/Scripts/custom/site.js"></script>
+    <!--StartToast-->
+    @*<script src="~/Scripts/Toast/jsmin.js"></script>*@
+    <script src="~/Scripts/Toastify/Toaster.js"></script>
+    <script src="~/Scripts/Toastify/toastify.js"></script>
+    <script src="~/Scripts/Toastify/umd.js"></script>
+    <!--EndToast-->
+    <!--StartFontawesome-->
+    <script src="~/Scripts/fontawesome/all.js"></script>
+    <script src="~/Scripts/fontawesome/fontawesome.js"></script>
+    <script src="~/Scripts/fontawesome/fontawesome.min.js"></script>
+    <!--End-->
+    <script src="~/Scripts/autocomplete/Auto.js"></script>
+    <script src="~/Scripts/custom/search.js"></script>
+    <script src="~/Scripts/custom/login.js"></script>
+    <script src="~/Scripts/custom/Detail.js"></script>
+    <script src="~/Scripts/custom/Favorite.js"></script>
+    <script src="~/Scripts/custom/Cart.js"></script>
+</body>
+</html>

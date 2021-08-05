@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "promotion";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@model CodeFirst1.ViewModels.AddPromotionViewModel
+<style>
+    .selectmult{
+        float:left;
+        width:25%;
+        padding:0;
+        margin:0;
+    }
+</style>
+<link href="~/src/multiselect/multiselect.css" rel="stylesheet" />
+<div class="container">
+    <div style="padding:10px;border:1px solid #ccc;" class="row">
+        <h3>Hình thức khuyến mãi</h3>
+        <span style="color:black;font-weight:bold;">Chọn khuyến mãi:</span><br />
+        <label style="cursor:pointer;"><input @(ViewBag.IdPro == 0 ? "checked":"")  id="pro-0" type="radio" class="check_pro" name="Promotion"  value="0"/>&nbsp; &nbsp; Không khuyến mãi</label><br />
+        @foreach (var item in Model.promotios)
+        {
+            <label style="cursor:pointer;"><input @(ViewBag.IdPro == item.Id ? "checked":"") id="pro-@item.Id"  type="radio" class="check_pro" name="Promotion" value="@item.Id" /> &nbsp;&nbsp; Khuyễn mãi @item.Ratio % @item.Content từ ngày @(Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy"))</label><br />
+        }
+    </div>
+    <hr style="color:black;padding:10px;" />
+    <div class="row" style="float:left;width:100%;">
+        <h2>Sản phẩm hiện có của cửa hàng</h2>
+        @foreach (var item in Model.hSXViewModels)
+        {
+            <div class="col-3 selectmult">
+                <p>@item.Name</p>
+                <select id="testSelect-@item.Id" multiple style="text-align : right;">
+                    @foreach (var item1 in item.Products)
+                    {
+                        <option @(Model.IdProduct.Contains(item1.Id)?"selected":"") style="cursor:pointer;" value="@item.Id">@item1.Name</option>
+                    }
+                </select>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/multiSelect/helper.js"></script>
+<script src="~/Scripts/multiSelect/multiselect.core.js"></script>
+<script src="~/Scripts/multiSelect/multiselect.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    document.multiselect('#testSelect-1');
+    document.multiselect('#testSelect-2');
+    document.multiselect('#testSelect-3');
+    document.multiselect('#testSelect-4');
+    document.multiselect('#testSelect-5');
+    document.multiselect('#testSelect-6');
+    document.multiselect('#testSelect-7');
+    document.multiselect('#testSelect-8');
+</script>
+<script>
+    $(document).ready(function () {
+        $('input[type=radio][name=Promotion]').change(function () {
+            window.location.href = '/User/Promotion?id=' + this.value;
+        });
+    });
+</script>
+

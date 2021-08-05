@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Thống kê theo khoảng thời gian";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@model List<CodeFirst1.ViewModels.InPhieuDonHangTungThang>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Đơn hàng theo từng tháng</title>
+
+</head>
+<body>
+    <h2>THEO DÕI ĐƠN HÀNG THEO KHOẢNG THỜI GIAN</h2>
+    <hr />
+    @using (Html.BeginForm("KQThongKeTheoKhoangThoiGian", "User"))
+    {
+        <div class="row">
+            <label for="birthday">Từ ngày:</label>
+            <input type="date" name="tungay" required>
+            <label for="birthday">Đến ngày:</label>
+            <input type="date" name="denngay"  required>
+            <button class="btn btn-success" id="thongke-khoangthoigian">Chọn</button>
+        </div>
+        <div>
+                <span style="color:red;">@ViewBag.Loi</span>
+        </div>
+    }
+        <div class="container">
+            @Html.Partial("_ThongKe",Model)
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "ThongKeSoLuongTon";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="~/Char/hightchart.js"></script>
+<script src="~/Char/highchartexporting.js"></script>
+<script src="~/Char/highcharexportdata.js"></script>
+
+@model List<CodeFirst1.ViewModels.ThongKe>
+<body>
+    <h1>Thống kê số lượng sản phẩm trong kho</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="text-center">Tên sản phẩm</td>
+                        <td class="text-center">Số lượng</td>
+                        <td class="text-center">Tổng tiền</td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.tensp</td>
+                            <td class="text-center">@item.slb</td>
+                            <td class="text-center">@String.Format("{0:0,0}", item.tongtien) VNĐ </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td class="text-center"> Tổng số lượng : @Model.Sum(n => n.slb)</td>
+                        <td class="text-center">Tổng tiền : @String.Format("{0:0,0}", Model.Sum(n => n.tongtien)) NVĐ</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <a href="@Url.Action("Inbaobaosanphamtonkho","User")" class="btn btn-primary" style="margin-left:80%; margin-bottom:1%">In báo cáo</a>
+    </div>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+</body>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Char/TKSoLuongTon.js"></script>

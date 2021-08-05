@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "HienThiSanPham";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+
+<!DOCTYPE html>
+@model List<CodeFirst1.ViewModels.ProductViewModel>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/custom/SanPhamAdmin.css" rel="stylesheet" />
+</head>
+<body>
+    <h2 style="color:#e00c0c; font-weight:bold;">Danh Sách Sản Phẩm LapTop</h2>
+    @if (Session["Status"] == null)
+    {
+        <h2>Phiên làm việc đã hết hạn</h2>
+    }
+    @if (Session["Status"] != null)
+    {
+        <div id="them-sp">
+            @{
+                var status = Convert.ToInt32(Session["Status"].ToString());
+            }
+            @if (status == 0 || status == 1)
+            {
+                <div id="them-sp-buttonn">
+                    <span>
+                        @Html.ActionLink("Thêm Sản Phẩm", "HienThiThemSanPham")
+                    </span>
+                </div>
+            }
+
+            @*<div class="active-pink-3 active-pink-4 mb-4" style="width:700px; float:left;">
+                    @Html.TextBox("txtTimSPAD", "", htmlAttributes: new { @Class = "TextBoxTimKiem2", @placeholder = "Nhập tên máy" })
+                    <input type="hidden" value="@Url.Action("TimSP", "Home")" />
+                    <button type="button" class="btn btn-primary" id="TimSPAD">Tìm Kiếm</button>
+
+                </div>*@
+        </div>
+
+        @*<span style="margin-left:0px; background:#18ed57; ">
+                @Html.ActionLink("Thêm sản phẩm ", "Create")
+            </span>*@
+        <div id="div_SP">
+
+
+
+            <table class="table" style="text-align:center;margin-top:30px;">
+                <tr>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Ảnh
+                    </th>
+                    <th>
+                        Tên
+                    </th>
+
+                    <th>
+                        Số Lượng
+                    </th>
+
+                    <th>
+                        Bảo Hành
+                    </th>
+                    <th>
+                        CPU
+                    </th>
+                    <th>
+                        Memory
+                    </th>
+
+                    <th>
+                        Khuyến Mãi
+                    </th>
+                    @if (status == 0 || status == 1)
+                    {
+                        <th>Chức năng</th>
+                    }
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td style="width:10px; height:10px;">
+                            <img src="~/image/AnhDienThoai/@item.Image1" style="width:100px; height:100px;" />
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Guarantee)
+                        </td>
+                        <td>
+                            <div style="width:250px; height:100px;">
+                                @Html.DisplayFor(modelItem => item.CPU)
+                            </div>
+                        </td>
+                        <td>
+                            <div style="width:200px; height:100px;">
+                                @Html.DisplayFor(modelItem => item.InternalMemory)
+                            </div>
+                        </td>
+
+                        <td>
+                            @item.TenKM
+                        </td>
+                        @if (status == 0 || status == 1)
+                        {
+                            <td>
+                                @Html.ActionLink("Xóa", "Delete", new { id = item.Id })
+                            </td>
+                        }
+
+                    </tr>
+                }
+
+            </table>
+        </div>
+    }
+
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/scrip.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/Script.js"></script>
+    <script src="~/Scripts/tiltedpagescroll.js"></script>
+    <script src="~/Scripts/anh-dog.js"></script>
+    <script src="~/Scripts/btr-menu.js"></script>
+    <script src="~/Scripts/btr-menu.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/Giaodien.js"></script>
+    <script src="~/Scripts/Giaodien.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/Theme/js/btr-menu.js"></script>
+    <script src="~/Scripts/Login.js"></script>
+    <script src="~/Scripts/Dang-ky.js"></script>
+    <script src="~/Scripts/Giaodien.js"></script>
+</body>
+</html>

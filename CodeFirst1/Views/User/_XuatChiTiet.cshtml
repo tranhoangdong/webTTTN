@@ -1,0 +1,26 @@
+﻿@model List<CodeFirst1.ViewModels.SanPhamXuatPhieu>
+
+@foreach (var item in Model)
+{
+<div id="list-sp" class="row">
+
+    <div class="col-2">
+        <span> <img src="~/image/AnhDienThoai/@item.Anh" width="118" height="82" style="margin-left:-15px;margin-top:1px;" /></span>
+    </div>
+    <div class="col-3">
+        <div id="cach-top20px">@item.Ten</div>
+    </div>
+    <div class="col-1">
+        <div id="cach-top20px"> @item.Quantity</div>
+    </div>
+    <div class="col-2">
+        <div id="cach-top20px">@String.Format("{0:0,0}", (Decimal.Round(item.Price, 0))) </div>
+    </div>
+    <div class="col-3">
+        <div id="cach-top20px">@String.Format("{0:0,0}", (Decimal.Round((item.Quantity * item.Price), 0))) </div>
+    </div>
+    <div class="col-1">
+        <div id="cach-top20px">VNĐ</div>
+    </div>
+</div>
+}

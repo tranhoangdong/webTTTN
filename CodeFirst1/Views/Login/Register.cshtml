@@ -1,0 +1,62 @@
+﻿@model CodeFirst1.ViewModels.CustomerViewModel
+@{
+                ViewBag.Title = "Register";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="width:100%; font-weight:bold;text-align:center;"><h2>Đăng ký</h2></div>
+<div class="register-area ptb-100" style="width:100%;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-12 col-lg-12 col-xl-6 ml-auto mr-auto">
+                <div class="login">
+                    <div class="login-form-container">
+                        <div class="login-form">
+                            @using (Html.BeginForm("CustomerRegister", "Login", FormMethod.Post))
+                            {
+                                @Html.LabelFor(Model => Model.Account)
+                                @Html.EditorFor(Model => Model.Account)
+                                <span style="color:red;">
+                                    @Html.DisplayFor(Model => Model.ErrorAccountExists)
+                                </span><br />
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Account)
+                                </span><br />
+                                @Html.LabelFor(Model => Model.Password)
+                                @Html.EditorFor(Model => Model.Password)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Password)
+                                </span><br />
+                                <input type="checkbox" id="show-password"/>
+                                <lable>Hiển thị mật khẩu</lable><br />
+                                @Html.LabelFor(Model => Model.Name)
+                                @Html.EditorFor(Model => Model.Name)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Name)
+                                </span><br />
+                                @Html.LabelFor(Model => Model.Email)
+                                @Html.EditorFor(Model => Model.Email)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Email)
+                                </span><br />
+                                @Html.LabelFor(Model => Model.Phone)
+                                @Html.EditorFor(Model => Model.Phone)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Phone)
+                                </span><br />
+
+                                       <div class="button-box">
+                                           <button type="submit" class="default-btn floatright" style="cursor:pointer;">Đăng ký</button>
+                                           <a href="/Login/Index" class="default-btn floatright">Đăng nhập</a>
+                                         
+                                       </div>
+                                
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

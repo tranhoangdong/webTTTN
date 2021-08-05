@@ -1,0 +1,43 @@
+﻿
+@{
+                /**/
+
+                ViewBag.Title = "ViewTaiKhoanNguoiDung";
+                Layout = "~/Views/Shared/_Admin.cshtml";
+}
+@model List<CodeFirst1.ViewModels.CustomerViewModel>
+<div class="col-md-12">
+    <div class="white-box">
+        <h2 class="header-title">Danh sách người dùng</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tên</th>
+                        <th>Tài Khoản</th>
+                        <th>Mật Khẩu</th>
+                        <th>Email</th>
+                        <th>SĐT</th>
+                        <th>Điểm tích lũy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.id</td>
+                            <td>@item.Name</td>
+                            <td>@item.Account</td>
+                            <td>@item.Password</td>
+                            <td>@item.Email</td>
+                            <td>@item.Phone</td>
+                            <td>@item.Point</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+﻿
+@{
+    Layout = null;
+}
+@model List<CodeFirst1.ViewModels.doanhthuthang>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PhieuThongKeDoanhThu</title>
+
+    <link href="~/XuatPhieuCSS/bootstrap.css" rel="stylesheet" />
+    <link href="~/XuatPhieuCSS/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Thống kê doanh thu từng tháng của năm @ViewBag.nam</h1>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered" border="1">
+                        <tr>
+                            <td class="text-center">Tháng</td>
+                            <td class="text-center">Số lượng đơn hàng</td>
+                            <td class="text-center">Tổng tiền</td>
+                        </tr>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@item.thang</td>
+                                <td class="text-center">@item.sldh</td>
+                                <td class="text-center">@String.Format("{0:0,0}", item.tongtien) VNĐ </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" class="text-right"> Tổng số lượng đơn hàng : @Model.Sum(n => n.sldh)</td>
+                            <td class="text-center">Tổng doanh thu : @String.Format("{0:0,0}", @Model.Sum(n => n.tongtien)) VNĐ </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

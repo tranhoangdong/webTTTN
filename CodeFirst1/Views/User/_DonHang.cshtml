@@ -1,0 +1,37 @@
+﻿
+@model List<CodeFirst1.ViewModels.OrderModel>
+  
+<div class="table-responsive">
+    <table class="table table-striped jambo_table bulk_action">
+        <thead>
+            <tr class="headings">
+                <th class="column-title">Mã  </th>
+                <th class="column-title">Ngày đặt hàng </th>
+                <th class="column-title">Khánh hàng  </th>
+                <th class="column-title">Tổng tiền </th>
+                <th class="column-title no-link last">
+                    <span class="nobr">Action</span>
+                </th>
+                <th class="bulk-actions" colspan="7">
+                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr class="even pointer">
+                    <td class=" ">@item.Id</td>
+                    <td class=" ">@item.NgayDat </td>
+                    <td class=" ">@item.Name </td>
+                    <td class=" "> @String.Format("{0:0,0}", item.TongTien) VNĐ</td>
+                    <td class=" last">
+                        <a href="/User/OrderDetails?id=@item.Id">Xem</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+  
+

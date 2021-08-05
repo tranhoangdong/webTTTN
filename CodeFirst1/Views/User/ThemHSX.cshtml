@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "ThemHSX";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<div class="page-title">
+    <div class="title_left">
+        <h3>Thêm Hãng sản xuất </h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+@using (Html.BeginForm("CodeThemHSX", "User", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = " demo-form2", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+
+                    <h2>Thêm Hãng sản xuất <small>Điền đầy đủ thông tin</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu"></ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Tên hãng sản xuất <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" id="name-sp" name="name" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                  
+                   
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Ảnh <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            @Html.TextBox("file", "", new { type = "file" }) <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+            <a class="btn btn-primary" href="/User/Index">Hủy</a>
+            <button type="submit" class="btn btn-success">Thêm</button>
+        </div>
+    </div>
+}
+@model List<CodeFirst1.ViewModels.ManufactureModel>
+    <div class="col-md-12">
+        <div class="white-box">
+            <h2 class="header-title">Danh sách hãng sản xuất</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Logo</th>
+                            <th>Tên</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach (var item in Model)
+                      {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td><img src="~/image/AnhDienThoai/@item.Image" width="80" height="100"/> </td>
+                                <td>@item.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+

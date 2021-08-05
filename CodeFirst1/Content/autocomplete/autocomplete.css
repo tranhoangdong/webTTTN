@@ -1,0 +1,81 @@
+﻿* {
+    box-sizing: border-box;
+}
+.easyzoom-flyout{
+    color: red;
+}
+    .easyzoom-flyout img {
+        position: absolute !important;
+        top: -100px !important;
+        z-index:10;
+        left: 500px !important;
+        width: 800px;
+        height: 600px;
+    }
+
+#noidung {
+    /* height: 70px; */
+    /* width: 590px; */
+    /* background-color: #429a9d; */
+    /* float: left; */
+}
+
+#anhspauto {
+    /* margin-top: -40px; */
+    float: left;
+    padding: 0px;
+    height: 90px;
+    width: 185px;
+    /* border: 1px solid black; */
+}
+
+#khungttgia {
+    float: left;
+    height: 90px;
+    width: 397px;
+    /* border: 1px solid black; */
+}
+/*the container must be positioned relative:*/
+.autocomplete {
+    position: relative;
+    display: inline-block;
+}
+
+.autocomplete-items {
+    width: 103%;
+    height: 500px;
+    overflow: auto;
+    position: absolute;
+   
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+    .autocomplete-items div {
+        border-bottom: 1px dotted #ccc;
+        padding: 10px;
+        height: 127px;
+        cursor: pointer;
+        background-color: #f4f4f7;
+    }
+
+        /*when hovering an item:*/
+        .autocomplete-items div:hover {
+            background-color: #dadaf5;
+        }
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+#imgautocomplete {
+    width: 183px;
+    padding: 0px;
+    height: 89px;
+}

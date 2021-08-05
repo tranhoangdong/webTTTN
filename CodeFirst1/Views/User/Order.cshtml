@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+        <div class="x_title">
+            <div class="row">
+                @{ 
+                    var status =Convert.ToInt32(Session["Status"].ToString());
+                }
+                @if (status == 0 || status ==1)
+                {
+                    <div class="col-3 btn btn-primary" id="dh" data-iddh="0">Đơn hàng chờ xử lý</div>
+
+                }
+                @if (status ==0 || status == 2)
+                {
+                    <div class="col-3 btn btn-primary" id="dh" data-iddh="1">Đơn hàng đã xử lý</div>
+
+                }
+                <div class="col-3 btn btn-primary" id="dh" data-iddh="2">Đơn hàng đã giao</div>
+                <div class="col-3 btn btn-primary" id="dh" data-iddh="3">Đơn hàng đã bị hủy </div>
+            </div>
+        </div>
+        <div id="x_content_Order">
+
+        </div>
+    </div>
+</div>

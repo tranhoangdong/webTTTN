@@ -1,0 +1,262 @@
+﻿
+@{
+    ViewBag.Title = "TimPhuKien";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CodeFirst1.ViewModels.ProductsViewModel
+<div class="col-lg-9">
+    <div class="shop-product-wrapper res-xl res-xl-btn">
+        <div class="shop-bar-area">
+            <div style="float:left; height:auto; width:100%" class="row">
+                @foreach (var item in Model.Accessories)
+                {
+                    <div class="col-3 card-anh-linhkien" style="padding:5px;border:1px solid #eee;float:left;margin-top:10px;">
+                        <div style="float:left;height:116px;width:100%;text-align:center;">
+                            <img src="~/image/AnhDienThoai/@item.Image" style="height:110px;width: 205px;" class="anh-lk" />
+                        </div>
+                        <div id="ten-sp-linhkien" title="@item.Name">@item.Name</div>
+                        <br />
+                        <span style="color: #e10c00;line-height: 15px;font-size: 14px;">@item.PriceOut </span>
+                        <br />
+                        <span>HSX: @item.Manufacture </span>
+                        <div id="like" class="row" style=" position:relative;display:inline-block;bottom:0px !important;float:left;width:100%;margin-bottom:0px !important;">
+                            <div style="float:left;margin-left: 180px;margin-top: -5px;">
+                                <i class="pe-7s-look" id="xem-linh-kien" data-id-product="@item.Id" style="font-size:31px;cursor:pointer;" data-toggle="modal" data-target="#modellinhkien-@item.Id"></i>
+                            </div>
+                            <a class="add-del-accessoriesld" data-idCategory="@item.CategoryId" data-status="@(item.isYT==true ? "2": "1")" data-id-sp="@item.Id" title=" @(item.isYT == true ?"Xóa khỏi sản phẩm yêu thích" : "Thêm vào sản phẩm yêu thích") " style="cursor:pointer;">
+                                <div class="favorite-true">
+                                    @if (item.isYT == true)
+                                    {
+                                        <img id="imglk-@item.Id" src="~/image/heart.png" style="width: 23px;height: 22px;float:right;" />
+                                    }
+                                    else
+                                    {
+                                        <img id="imglk-@item.Id" src="~/image/black-heart.jpg" style="width: 23px;height: 22px;float:right;" />
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modellinhkien-@item.Id" tabindex="-1" role="dialog" aria-hidden="true">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="pe-7s-close" aria-hidden="true"></span>
+                        </button>
+                        <div class="modal-dialog modal-quickview-width" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="qwick-view-left">
+                                        <div class="quick-view-learg-img">
+                                            <div class="quick-view-tab-content tab-content">
+                                                <div class="tab-pane active show fade" id="@item.Id-lk" role="tabpanel">
+                                                    <img src="~/image/AnhDienThoai/@item.Image" alt="" style="width:320px; height:380px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="quick-view-list nav" role="tablist">
+                                            <a class="active" href="#@item.Id-lk" data-toggle="tab" role="tab">
+                                                <img src="~/image/AnhDienThoai/@item.Image" alt="" style="width:100px;height:112px;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="qwick-view-right">
+                                        <div class="qwick-view-content">
+                                            <h3>@item.Name</h3>
+                                            <div class="price">
+                                                <span class="new">@item.PriceOut  </span>
+                                            </div>
+                                            @if (item.Quantity > 0)
+                                            {
+                                                <div class="ktrahang">
+                                                    <i class="pe-7s-check"></i><span> &nbsp;Còn Hàng</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="ktrahang" style="color:red;">
+                                                    <i class="pe-7s-check"></i><span>Sản phẩm hiện hết hàng</span>
+                                                </div>
+                                            }
+                                            <div class="rating-number">
+                                                <div class="quick-view-rating">
+                                                    <i class="pe-7s-star"></i>
+                                                    <i class="pe-7s-star"></i>
+                                                    <i class="pe-7s-star"></i>
+                                                    <i class="pe-7s-star"></i>
+                                                    <i class="pe-7s-star"></i>
+                                                </div>
+                                                <div class="quick-view-number">
+                                                    <span>2 Ratting (S)</span>
+                                                </div>
+                                                <br />
+                                            </div>
+                                            <div class="detailssp">
+                                                <table style="height: 228px;width: 457px;">
+                                                    <tr>
+                                                        <td>
+                                                            <span>Hãng sản xuất: @item.Manufacture</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description1</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description2</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description3</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description4</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description5</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description6</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description7</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>Dành cho các dòng điện thoại:@item.Keyword</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="quickview-plus-minus">
+                                                <div class="cart-plus-minus">
+                                                    <input type="number" id="slsp-linhkien-@item.Id" value="@(item.Quantity > 0 ? 1: 0)" name="qtybutton" max="@item.Quantity" min="@(item.Quantity > 0 ? 1 : 0)" class="cart-plus-minus-box">
+                                                </div>
+                                                @if (item.Quantity > 0)
+                                                {
+                                                    <div class="quickview-btn-cart">
+                                                        <a class="btn-hover-black AddToCartAccessories" data-idsanpham="@item.Id" href="#"><i class="ti-shopping-cart"></i>Mua hàng</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="quickview-btn-cart">
+                                                        <a class="btn-hover-black" style="cursor:not-allowed !important;">Đã hết hàng</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+            </div>
+        </div>
+    </div>
+            @section Left{
+                <div class="col-lg-3">
+                    <div class="shop-sidebar mr-50">
+                        <div class="sidebar-widget mb-50">
+                            <h3 class="sidebar-title">Danh mục tìm kiếm:</h3>
+                        </div>
+                        <div class="sidebar-widget mb-45">
+                            <h3 class="sidebar-title">Danh mục</h3>
+                            <div class="sidebar-categories">
+                                @foreach (var manufactureProduct in Model.ManufactureProducts)
+                                {
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" value="@manufactureProduct.Name" name="manufacture">  @manufactureProduct.Name</label>
+                                        <span class="number-product">@manufactureProduct.NumberProduct</span>
+                                        <br>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        @*<div class="sidebar-widget mb-40">
+                                <h3 class="sidebar-title">Khoảng giá:</h3>
+                                <div class="price_filter">
+                                    <div id="slider-range"></div>
+                                    <div class="price_slider_amount">
+                                        <div class="label-input">
+                                            <label>Giá : </label>
+                                            <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="sidebar-widget mb-45">
+                            <h3 class="sidebar-title">Mức giá</h3>
+                            <div class="sidebar-categories">
+                                <label class="radio">
+                                    <input type="radio" checked name="gia" value="0"> Tất cả giá
+                                </label>
+                                <br />
+                                <label class="radio">
+                                    <input type="radio" name="gia" value="1"> Dưới 2 triệu
+                                </label>
+                                <br>
+                                <label class="radio">
+                                    <input type="radio" name="gia" value="2"> Từ 2-10 triệu
+                                </label>
+                                <br />
+                                <label class="radio">
+                                    <input type="radio" name="gia" value="3"> Từ 10-20 triệu
+                                </label>
+                                <br />
+                                <label class="radio">
+                                    <input type="radio" name="gia" value="4"> Trên 20 triệu
+                                </label>
+                                <br />
+                            </div>
+                        </div>
+                        <input class="btn btn-info" type="button" id="view-resulf" value="Xem kết quả" style="cursor:pointer;" />
+                        <br />
+                        <div class="sidebar-widget mb-50">
+                            <br />
+                            <h3 class="sidebar-title">Sản phẩm được yêu thích nhiều nhất</h3>
+                            <div class="sidebar-top-rated-all">
+                                @foreach (var item in Model.favorateProduct)
+                                {
+                                    <div class="sidebar-top-rated mb-30">
+                                        <div class="single-top-rated">
+                                            <div class="top-rated-img">
+                                                <a href="/Home/Detail?id=@item.Id"><img src="~/image/AnhDienThoai/@item.Image1" width="91" height="88" alt=""></a>
+                                            </div>
+                                            <div class="top-rated-text">
+                                                <h4><a href="#">@item.Name</a></h4>
+                                                <div class="top-rated-rating">
+                                                    <ul>
+                                                        <li><i class="pe-7s-star"></i></li>
+                                                        <li><i class="pe-7s-star"></i></li>
+                                                        <li><i class="pe-7s-star"></i></li>
+                                                        <li><i class="pe-7s-star"></i></li>
+                                                        <li><i class="pe-7s-star"></i></li>
+                                                    </ul>
+                                                </div>
+                                                <span>@item.PriceOut</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }

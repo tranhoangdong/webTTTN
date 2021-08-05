@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Doanh Thu Tháng";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+<script src="~/Char/hightchart.js"></script>
+<script src="~/Char/hightchar-3d.js"></script>
+<script src="~/Char/highcharexportdata.js"></script>
+<script src="~/Char/highchartaccessibility.js"></script>
+<script src="~/Char/highchartexporting.js"></script>
+<link href="~/Content/custom/DoanhThuThang.css" rel="stylesheet" />
+@model List<CodeFirst1.ViewModels.doanhthuthang>
+<figure class="highcharts-figure">
+
+    <h1>Thống kê doanh thu từng tháng trong năm</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered" border="1">
+                    <tr>
+                        <td class="text-center">Tháng</td>
+                        <td class="text-center">Số lượng đơn hàng</td>
+                        <td class="text-center">Tổng tiền</td>
+                        <td class="text-center"> Chi tiết</td>
+                    </tr>
+                   @foreach (var item in Model)
+                   {
+                        <tr>
+                            <td class="text-center">@item.thang</td>
+                            <td class="text-center">@item.sldh</td>
+                            <td class="text-center">@String.Format("{0:0,0}", item.tongtien) VNĐ </td>
+                            <td class="text-center"><a href="@Url.Action("In", "User",new{id= item.thang})" class="btn btn-primary">In báo cáo</a></td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3" class="text-right"> Tổng số lượng đơn hàng : @Model.Sum(n => n.sldh)</td>
+                        <td class="text-center">Tổng doanh thu : @String.Format("{0:0,0}", Model.Sum(n => n.tongtien)) VNĐ</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <a href="@Url.Action("InDoanhThu", "User")" class="btn btn-primary" style="margin-left:80%; margin-bottom:1%">In báo cáo</a>
+    </div>
+
+
+
+    <div id="container"></div>
+    <p class="highcharts-description">
+        Thống kê doanh thu của cửa hàng qua các tháng
+    </p>
+</figure>
+
+<script src="~/Char/jquery-3.3.1.js"></script>
+<script src="~/Char/jquery-3.3.1.min.js"></script>
+<script src="~/Char/DoanhThuThang.js"></script>

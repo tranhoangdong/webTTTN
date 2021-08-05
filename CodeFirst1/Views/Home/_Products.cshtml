@@ -1,0 +1,294 @@
+﻿
+@model List<CodeFirst1.ViewModels.ProductViewModel>
+
+<div id="grid-sidebar1" class="tab-pane fade active show">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-6 col-md-6 col-xl-3">
+                <div class="product-wrapper mb-30" style="border: 1px solid #ccc;padding:2px;">
+                    <div class="product-img">
+                        <a>
+                            <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:200px; height:256px;">
+                        </a>
+                        @if (item.IsKM == true)
+                        {
+                            <span class="khuyenmai">@item.Ratio%</span>
+                        }
+                        @if (item.isGift == true)
+                        {
+                            <div>
+                                <div class="tooltip1">
+                                    <span class="tooltiptext1">
+                                        <span style="margin-left:-81px; font-family: Roboto-Bold;font-weight: bold;"><i class="ti-gift"></i> Phần quà :</span>
+                                        <br /><span style=" font-family: Roboto-Bold;">  @item.InfoGift</span>
+                                    </span>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="product-action">
+
+                            <a class="add-del-favorive" data-status="@(item.Favorive==true ? "2": "1")" data-idCategory="@item.CategoryId" data-id-sp="@item.Id" title=" @(item.Favorive == true ?"Xóa khỏi sản phẩm yêu thích" : "Thêm vào sản phẩm yêu thích") " style="cursor:pointer;">
+
+                                <div class="favorite-true">
+                                    @if (item.Favorive == true)
+                                    {
+                                        <img id="img-@item.Id" src="~/image/heart.png" style="width: 23px;height: 22px;" />
+                                    }
+                                    else
+                                    {
+                                        <img id="img-@item.Id" src="~/image/black-heart.jpg" style="width: 23px;height: 22px;" />
+                                    }
+                                </div>
+                            </a>
+                            @if (item.Quantity > 0)
+                            {
+                                <a class="animate-top" title="Thêm vào giỏ hàng" id="AddCart" data-id-product="@item.Id" style="cursor:pointer;color:white;">
+                                    <i class="pe-7s-cart"></i>
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="animate-top" title="Đã hết hàng" style="cursor:pointer;color:white;">
+                                    <i class="pe-7s-close-circle"></i>
+                                </a>
+                            }
+
+                            <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#@item.Id-model" style="cursor:pointer;color:white;">
+                                <link rel="stylesheet" href="~/Content/assets/css/jquery-ui.css">
+                                <i class="pe-7s-look"></i>
+                            </a>
+                            <a class="animate-right" title="Go to Detail" style="cursor:pointer;color:white;" onclick="location.href='@Url.Action("Detail", "Home", new { id = item.Id})'">
+                                <i class="ti-shift-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="product-content" style="margin-left:9px;">
+                        <h4 id="ten-sp" style="color:#333; overflow:hidden;display:-webkit-box;"><a href="#"> @item.Name </a></h4>
+                        @if (item.IsKM == true)
+                        {
+                            <span style="color:#e10c00;line-height:14px;font-size:14px;">@String.Format("{0:0,0}", item.PriceKM) VNĐ</span><br />
+                            <strike style="color:#222;font-size:12px;">@item.PriceOut </strike>
+
+                        }
+                        else
+                        {
+                            <span style="color:#e10c00;line-height:15px;font-size:14px;"> @item.PriceOut </span><br />
+                            <striker>&nbsp;</striker>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!--Modal-->
+
+            <div class="modal fade" id="@item.Id-model" tabindex="-1" role="dialog" aria-hidden="true">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="pe-7s-close" aria-hidden="true"></span>
+                </button>
+                <div class="modal-dialog modal-quickview-width" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="qwick-view-left">
+                                <div class="quick-view-learg-img">
+                                    <div class="quick-view-tab-content tab-content">
+                                        <div class="tab-pane active show fade" id="@item.Id-1" role="tabpanel">
+                                            <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:320px; height:380px;">
+                                        </div>
+                                        <div class="tab-pane fade" id="@item.Id-2" role="tabpanel">
+                                            <img src="~/image/AnhDienThoai/@item.Image2" alt="" style="width:320px; height:380px;">
+                                        </div>
+                                        <div class="tab-pane fade" id="@item.Id-3" role="tabpanel">
+                                            <img src="~/image/AnhDienThoai/@item.Image3" alt="" style="width:320px; height:380px;">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="quick-view-list nav" role="tablist">
+                                    <a class="active" href="#@item.Id-1" data-toggle="tab" role="tab">
+                                        <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:100px;height:112px;">
+                                    </a>
+                                    <a href="#@item.Id-2" data-toggle="tab" role="tab">
+                                        <img src="~/image/AnhDienThoai/@item.Image2" alt="" style="width:100px;height:112px;">
+                                    </a>
+                                    <a href="#@item.Id-3" data-toggle="tab" role="tab">
+                                        <img src="~/image/AnhDienThoai/@item.Image3" alt="" style="width:100px;height:112px;">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="qwick-view-right">
+                                <div class="qwick-view-content">
+                                    <h3>@item.Name</h3>
+                                    @if (item.IsKM == true)
+                                    {
+                                        <div class="price">
+                                            <span class="new">@String.Format("{0:0,0}", item.PriceKM) VNĐ</span>
+                                            <span class="old">@item.PriceOut</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="price">
+                                            <span class="new">@item.PriceOut  </span>
+                                        </div>
+                                    }
+                                    @if (item.Quantity > 0)
+                                    {
+                                        <div class="ktrahang">
+                                            <i class="pe-7s-check"></i><span> &nbsp;Còn Hàng</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="ktrahang" style="color:red;">
+                                            <i class="pe-7s-check"></i><span>Sản phẩm hiện hết hàng</span>
+                                        </div>
+                                    }
+                                    <div class="rating-number">
+                                        <div class="quick-view-rating">
+                                            <i class="pe-7s-star"></i>
+                                            <i class="pe-7s-star"></i>
+                                            <i class="pe-7s-star"></i>
+                                            <i class="pe-7s-star"></i>
+                                            <i class="pe-7s-star"></i>
+                                        </div>
+                                        <div class="quick-view-number">
+                                            <span>2 Ratting (S)</span>
+                                        </div>
+                                        <br />
+                                    </div>
+                                    <div class="detailssp">
+                                        <table style="height: 228px;width: 387px;">
+                                            <tr>
+                                                <td>
+                                                    <span>Hãng sản xuất:</span>
+                                                </td>
+                                                <td>
+                                                    @item.Manufacturer
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Hệ điều hành:</span>
+                                                </td>
+                                                <td>
+                                                    @item.OperatingSystem
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Camera trước:</span>
+                                                </td>
+                                                <td>
+                                                    @item.FrontCamera
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Camera sau:</span>
+                                                </td>
+                                                <td>
+                                                    @item.RearCamera
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Ram:</span>
+                                                </td>
+                                                <td>
+                                                    @item.Ram
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>CPU:</span>
+                                                </td>
+                                                <td>
+                                                    @item.CPU
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Bộ nhớ trong:</span>
+                                                </td>
+                                                <td>
+                                                    @item.InternalMemory
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Sim:</span>
+                                                </td>
+                                                <td>
+                                                    @item.Sim
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Pin:</span>
+                                                </td>
+                                                <td>
+                                                    @item.Battery
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Bảo hành:</span>
+                                                </td>
+                                                <td>
+                                                    @item.Guarantee tháng
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="km">
+                                        @if (item.IsKM == true)
+                                        {
+                                            <fieldset>
+                                                <legend style="margin-left:20px;color:#0c3;font-size:20px;">Khuyến mãi:</legend>
+                                                <div class="detailssp" style="margin-left:10px;">
+                                                    <ul>
+                                                        <li> <span>Tình trạng:</span> Đang được hưởng khuyến mãi dành riêng cho một số sản phẩm</li>
+                                                        <li> <span>Thời gian:</span>Từ ngày @item.FromDay đến ngày @item.ToDay</li>
+                                                        <li><span>Tỉ lệ:</span> @item.Ratio%</li>
+                                                        <i style="margin-left:20px;">@item.Content</i>
+                                                    </ul>
+                                                </div>
+                                            </fieldset>
+                                        }
+                                        else
+                                        {
+                                            <div></div>
+                                        }
+
+                                    </div>
+                                    <div class="quickview-plus-minus">
+
+                                        <div class="cart-plus-minus">
+                                            <input type="number" value="@(item.Quantity > 0 ? 1: 0)" name="qtybutton" max="@item.Quantity" min="@(item.Quantity > 0 ? 1 : 0)" class="cart-plus-minus-box">
+                                        </div>
+                                        @if (item.Quantity > 0)
+                                        {
+                                            <div class="quickview-btn-cart">
+                                                <a class="btn-hover-black" href="#"><i class="ti-shopping-cart"></i>Mua hàng</a>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="quickview-btn-cart">
+                                                <a class="btn-hover-black" style="cursor:not-allowed !important;">Đã hết hàng</a>
+                                            </div>
+                                        }
+                                        <div class="quickview-btn-wishlist">
+                                            <a class="btn-hover" href="#"><i class="pe-7s-like"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

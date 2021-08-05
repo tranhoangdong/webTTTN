@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "ThongTinKhuyenMai";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<CodeFirst1.ViewModels.CTKhuyenMaiViewModel>
+@foreach (var item in Model)
+{
+    <div class="col-md-12">
+        <div class="white-box">
+            <h6 class="header-title">Khuyến mãi @item.fromday  đến @item.today tỉ lệ @item.ratio nội dung @item.Content</h6>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Hãng sản xuất</th>
+                           <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item1 in item.Ttsanphams)
+                        {
+                            <tr>
+                                <td>@item1.id</td>
+                                <td><img src="~/image/AnhDienThoai/@item1.image" width="80" height="100"/></td>
+                                <td>@item1.Name</td>
+                                <td>@item1.Manufacture</td>
+                                <td><a href="/Home/Detail?id=@item1.id" style="text-decoration:none;">Xem</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,44 @@
+﻿
+
+@model List<CodeFirst1.ViewModels.OrderDetails>
+
+@foreach (var item in Model)
+{
+    <div id="partial" class="row ct-sp-@item.ProductId-@item.CategoryId">
+        <div class="col-3">
+            <img src="/image/AnhDienThoai/@item.image" id="anh-ctus" />
+        </div>
+        <div class="col-3">
+            <br />
+            <span id="Ten-san-Pham"> @item.Name </span>
+            <br />
+            <span>Sản Phẩm Chính Hãng</span>
+        </div>
+        <div class="col-2" style="text-align:center; margin-top:27px;">
+            <br />
+            <span>Giá: @String.Format("{0:0,0}", item.UnitPrice)  đ</span>
+            <br />
+            <br />
+            <span>Tổng:<span class="tong-noi-sp-@item.ProductId-@item.CategoryId">@String.Format("{0:0,0}",(item.UnitPrice * item.Quantity))</span> đ</span>
+        </div>
+        <div class="col-1" id="traii" style="text-align:center; margin-top:27px;">
+            <br />
+            SL:<span class="sldh-@item.ProductId-@item.CategoryId"> @item.Quantity </span>
+        </div>
+        <div class="col-3">
+            @if (item.Status == 0)
+            {
+                <div>Quản Lý</div>
+                <div style="margin-left:-12px;margin-top:24px;">
+                    <input class="so-luong-san-pham-don-hang" id="ip-@item.ProductId-@item.CategoryId" value="@item.Quantity" type="number" max="@(item.SoLuongKho + item.Quantity)" min="1" style="height:31px; width:36px;" />
+
+                    <button class="btn btn-primary UpdateProduct" style="width:50px;height:31px;" data-CategoryId="@item.CategoryId" data-idsp="@item.ProductId" data-idhd="@item.OrderId">
+                        Chọn
+                    </button>
+                    <button class="btn btn-primary DeleteProduct" data-idCategory="@item.CategoryId" data-idsanpham="@item.ProductId" data-iddonhang="@item.OrderId" style="width:48px;height:31px;">Xóa</button>
+                </div>
+            }
+        </div>
+
+    </div>
+}

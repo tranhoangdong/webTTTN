@@ -1,0 +1,151 @@
+﻿#thong-tin-da-dang-ky {
+    width: 100%;
+    height: 950px;
+    float: left;
+    background: #f9f9f9;
+}
+#tt-thongtin{
+    width:20%;
+    height:950px;
+    float:left;
+   
+    padding:10px;
+
+}
+ul li{
+    margin-left:70px;
+    text-decoration:none;
+}
+#tt-main{
+    width:997px;
+    height:600px;
+    float:left;
+  
+}
+#khungiframe {
+    width: 1000px;
+    height: 950px;
+    border: none;
+}
+#ho-so{
+    width:997px;
+    height:319px;
+    background:#FFF;
+    float:left;
+    border-top:1px solid black;
+    border-bottom:1px solid black;
+}
+#khung-ho-so-trai {
+    width: 360px;
+    height: 319px;
+    float: left;
+    padding: 20px;
+}
+#khung-ho-so-giua {
+    width: 260px;
+    height: 319px;
+    float: left;
+    padding: 20px;
+}
+#khung-ho-so-phai {
+    width: 251px;
+    height: 319px;
+    float: left;
+    padding: 20px;
+}
+.doi-tt {
+    width: 194px;
+    height: 50px;
+    margin-right: 142px;
+    margin-top: 50px;
+    float: right;
+    background-color: #429a9d;
+    font-size: 21px;
+}
+#khung-chinh-sua-tt {
+    float: left;
+    border: 1px solid black;
+    height: 279px;
+    float:left;
+    width:100%;
+    display:none;
+}
+.r-sua-tt {
+    width: 419px;
+    height: 36px;
+    margin-top: 10px;
+   
+    align-items:center;
+}
+#hien-thi-loi {
+    font-size: 16px;
+    margin-left: 108px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+#hien-thi-loi-ten {
+    font-size: 16px;
+    margin-left: 108px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+#hien-thi-email {
+    font-size: 16px;
+    margin-left: 108px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+#hien-thi-sdt {
+    font-size: 16px;
+    margin-left: 108px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+#hien-thi-loi-diachi {
+    font-size: 16px;
+    margin-left: 108px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
+.dinh-dang-ip {
+    width: 100%;
+    height: 35px;
+    font-size: 16px;
+}
+.luuu-thay-doi {
+    height: 51px;
+    margin-right: 333px;
+    width: 200px;
+    font-size: 23px;
+    margin-top: -71px;
+    background-color: #429a9d;
+}
+.erchuadn {
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+.looading {
+    float: right;
+    color: red;
+    font-size: 150px;
+    margin-top: 38px;
+    margin-right: 539px;
+}
+.cltieude {
+    color: #429a9d;
+    font-size: 18px;
+    font-weight: bold;
+}
+.chu-tieu-de {
+    font-weight: bold;
+    font-size: 21px;
+    color: black;
+}

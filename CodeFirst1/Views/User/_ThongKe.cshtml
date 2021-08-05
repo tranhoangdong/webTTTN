@@ -1,0 +1,30 @@
+﻿
+@model List<CodeFirst1.ViewModels.InPhieuDonHangTungThang>
+<h2 class="text-center">Đơn hàng đã thanh toán từ @ViewBag.tungay đến @ViewBag.denngay</h2>
+<div class="row">
+    <div class="col-sm-12">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tr>
+                    <td class="text-center">Mã đơn hàng</td>
+                    <td class="text-center">Tên khách hàng</td>
+                    <td class="text-center">Ngày thanh toán</td>
+                    <td class="text-center">Tổng tiền</td>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">@item.madonhang</td>
+                        <td class="text-center">@item.tenkh</td>
+                        <td class="text-center">@item.ngaylap</td>
+                        <td class="text-center">@String.Format("{0:0,0}", item.tongtien) VNĐ </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="2" class="text-center"> Tổng số đơn hàng : @Model.Count()</td>
+                    <td colspan="2" class="text-center">Tổng doanh thu : @String.Format("{0:0,0}", @Model.Sum(n => n.tongtien)) VNĐ </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

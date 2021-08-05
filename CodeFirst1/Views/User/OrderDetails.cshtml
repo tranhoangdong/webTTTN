@@ -1,0 +1,336 @@
+﻿
+@{
+    ViewBag.Title = "OrderDetails";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+@model CodeFirst1.ViewModels.OrderDetailsViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <div id="ct_left">
+            <div id="left_t">
+                <span style="font-size:18px;font-weight:bold;">Chi Tiết Đơn Hàng </span> <span style="margin-left:400px;">Mã Đơn Hàng: @Model.OrderInOrderDetail.Id</span>
+                @if (Model.OrderInOrderDetail.status == 2)
+                {
+                    <h5> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Đã Thanh Toán</h5>
+                }
+                else if (Model.OrderInOrderDetail.status == 3)
+                {
+                    <h5> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Đơn hàng đã bị hủy</h5>
+                }
+                else if (Model.OrderInOrderDetail.status == 1)
+                {
+                    //location.href = location.href
+                    <h5> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Đã được xác nhận</h5>
+                }
+                else if (Model.OrderInOrderDetail.status == 0)
+                {
+                    //location.href = location.href
+                    <h5> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp; Đang chờ xác nhận</h5>
+                }
+            </div>
+            <div id="banner-lf">
+                <div>
+                    @*$('#sample').attr('disabled', 'disabled')*@
+                    @Html.Partial("_ProductOrder", Model.OrderDetails)
+                </div>
+                <div id="ct_gia">
+                    <div style="width:200px; height:100%; float:left; font-size:16px;">
+                        <div style="margin-top:100px; margin-bottom:50px;width:200px;height:200px;text-align:right;padding:10px;">
+                            <h5>Tạm tính:</h5>
+                            <h5>Điểm sử dụng:</h5>
+                            <h5>Tổng :</h5>
+                            <h5>Mã khuyến mãi:</h5>
+                            <h5>Vận chuyển:</h5>
+                            <h5>Số tiền phải thanh toán:</h5>
+                            <h5>(Trả khi nhận hàng)</h5>
+                            <h5>Số tiền đã thanh toán:</h5>
+                        </div>
+                    </div>
+                    <div style="width:113px; height:100%;float:left;font-size:16px;">
+                        <div style="margin-top:100px;margin-bottom:50px;width:110px;height:200px;text-align:left;padding-top:10px;">
+                            <h5><span class="giatri-tamtinh"> @String.Format("{0:0,0}", (Decimal.Round(@Model.OrderInOrderDetail.ProvisionalAmount, 0))) </span>  đ</h5>
+                            <h5><span>@Model.OrderInOrderDetail.PointsUse</span>  điểm</h5>
+                            <h5><span class="tong-gtsp"> @String.Format("{0:0,0}", (Decimal.Round(@Model.OrderInOrderDetail.Total, 0))) </span>  đ</h5>
+                            <h5>0 đ</h5>
+                            <h5> <span class="tong-gtsp1"> @String.Format("{0:0,0}", (Decimal.Round(@Model.OrderInOrderDetail.Total, 0))) </span> đ</h5>
+                            <h5> &nbsp;</h5>
+                            <h5>0 đ</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="xac_thuc_don_hang">
+                <span style="font-size:18px;"> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;ĐÃ XÁC THỰC ĐƠN HÀNG</span>
+            </div>
+            <div id="xac_nhan_thanh_toan">
+                <span style="font-size:18px;"> <span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>&nbsp;THANH TOÁN CHỜ XỬ LÝ</span>
+                @if (Model.OrderInOrderDetail.status == 0)
+                {
+                    <a class="btn btn-primary" style=" margin-left:120px;cursor: pointer;" id="xac-nhan-thanh-toan" data-idxacnhan="@Model.OrderInOrderDetail.Id"> Xác nhận thanh toán</a>
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#modalCancel">
+                        Hủy
+                    </button>
+                    <a href=" @Url.Action("XuatPhieuGiaoHang","User", new { id = Model.OrderInOrderDetail.Id}) " target="_blank" style="color:white !important;"
+                       class="btn btn-primary">
+                        In phiếu
+                    </a>
+                }
+                else if (Model.OrderInOrderDetail.status == 1)
+                {
+                    <a href=" @Url.Action("XuatPhieuGiaoHang","User", new { id = Model.OrderInOrderDetail.Id}) " target="_blank" class="btn btn-primary" style=" margin-left:120px;cursor: pointer;" id="thanh-toan-don-hang" data-idxacnhan="@Model.OrderInOrderDetail.Id">Thanh toán</a>
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#modalCancel">
+                        Hủy
+                    </button>
+                }
+                else if (Model.OrderInOrderDetail.status == 2)
+                {
+                    <button style="background:green;margin-left:150px;width:200px;height:30px;cursor: pointer; " id="xac-nhan-thanh-toan" disabled="disabled" data-idxacnhan="@Model.OrderInOrderDetail.Id"> Đơn hàng đã thanh toán</button>
+                }
+                else if (Model.OrderInOrderDetail.status == 3)
+                {
+                    <button style="background:green;margin-left:150px;width:200px;height:30px;cursor: pointer; " id="xac-nhan-thanh-toan" disabled="disabled" data-idxacnhan="@Model.OrderInOrderDetail.Id"> Đơn hàng bị hủy</button>
+                }
+            </div>
+            @if (Model.OrderInOrderDetail.status == 3)
+            {
+                <span> Lý do: <span id="LyDoHuyDonHang" style="color:red;"> @Model.OrderInOrderDetail.ReasonCancel </span></span>
+            }
+            @if (Model.OrderInOrderDetail.status == 2)
+            {
+                <div id="xac_nhan_giao">
+                    <span style="font-size:18px;margin-left:7px;"> <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;TẤT CẢ SẢN PHẨM ĐÃ ĐƯỢC GIAO</span>
+                    <br /> <br /> <i style="font-size:18px;font-weight:bold;">0852015499</i> <span style="border:1px solid black;margin-left:20px;">Đã Giao Hàng</span>
+                    <br />
+                    <br />
+                    <br />
+                    <span style="font-size:15px;">Viettel Post-VCN-Chuyển phát nhanh</span> <span style="margin-left:90px;font-size:15px;">Tổng khối lượng: </span>
+                    <br />   <span style="font-size:15px;">Lấy hàng từ : Kho trung tâm</span><span style="margin-left:165px;font-size:15px;">Số tiền thu hộ:  @String.Format("{0:0,0}", (Decimal.Round(@Model.OrderInOrderDetail.Total, 0)))  đ</span>
+                    @*<button style="margin-left:190px;width:150px;height:30px;"> Cập nhật mã vận đơn</button>*@
+                    @*<button style="margin-left:30px;width:60px;height:30px;"> In đơn</button>*@
+                </div>
+            }
+
+        </div>
+        <div id="ct_right" style="font-family:'Times New Roman';">
+            <div id="ct_right1">
+                <span style="font-size:18px;"> KHÁCH HÀNG  &nbsp;<span class="glyphicon glyphicon-user" aria-hidden="true" style="margin-left:80px;"></span></span>
+                <br />
+                <h5 style="color:#4949b4;">Tên : @Model.OrderInOrderDetail.Name </h5>
+                <span style=" font-size:15px; "><span class="glyphicon glyphicon-inbox" aria-hidden="true"></span> &nbsp; @Model.OrderInOrderDetail.SoDonHang đơn hàng</span>
+                <hr />
+                <span style="font-size:17px;">
+                    THÔNG TIN ĐƠN HÀNG
+                    <!-- Button trigger modal -->
+                    @if (Model.OrderInOrderDetail.status == 2 || Model.OrderInOrderDetail.status == 3 || Model.OrderInOrderDetail.status == 1)
+                    {<button type="button"
+                             class="btn btn-primary"
+                             data-toggle="modal"
+                             data-target="#modalEmail"
+                             disabled="disabled">
+                            Sửa
+                        </button>
+                    }
+                    else if (Model.OrderInOrderDetail.status == 0)
+                    {
+                        <button type="button"
+                                class="btn btn-primary"
+                                data-toggle="modal"
+                                data-target="#modalEmail">
+                            Sửa
+                        </button>
+                    }
+
+                    <button style="border:0px;margin-left:10px;background:#fff;">
+                        <span class="glyphicon glyphicon-pencil"
+                              aria-hidden="true"
+                              style="width:auto;"
+                              data-toggle="modal"
+                              data-target="#id01">
+                        </span>
+                    </button>
+                </span>
+                <br />
+                <br /><span style="color:blue; cursor:pointer;" font-size:15px;>Email: <span id="email-id">@Model.OrderInOrderDetail.Email</span></span>
+                <br />  <span style=" font-size:15px;  ">Đã có tài khoản</span>
+                <hr />
+                <span style="font-size:17px;">
+                    ĐỊA CHỈ GiAO HÀNG
+                    <button style="border:0px;margin-left:30px;background:#fff;"><span class="glyphicon glyphicon-pencil" aria-hidden="true" onclick="document.getElementById('id02').style.display='block'" style="width:auto;"></span></button>
+                </span>
+                @if (Model.OrderInOrderDetail.status == 2 || Model.OrderInOrderDetail.status == 3 || Model.OrderInOrderDetail.status == 1)
+                {
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#modalDiaChi"
+                            disabled="disabled">
+                        Sửa
+                    </button>
+                }
+                else if (Model.OrderInOrderDetail.status == 0 )
+                {
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-toggle="modal"
+                            data-target="#modalDiaChi">
+                        Sửa
+                    </button>
+                }
+                <br />
+                <br /><br />
+                <span style=" font-size:15px;  ">
+                    <span id="phone-id">SĐT: @Model.OrderInOrderDetail.Phone</span>
+                </span>
+                <br /> <span style=" font-size:15px;   " id="Address-id">Địa Chỉ: @Model.OrderInOrderDetail.Address</span><br />
+                <span id="thanhpho-id">Thành Phố: @Model.OrderInOrderDetail.City</span>
+                <br />
+
+
+            </div>
+            <div id="ct_right2">
+                <div id="ct_right2_top">
+                    <span style="font-size:17px;">CHUYỂN ĐỔI ĐƠN HÀNG</span>
+                    <br /><br />
+                    <span style="font-size:15px;"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>  &nbsp; Đơn hàng đến từ web</span>
+                </div>
+                <div id="ct_right2_bot">
+                    <span style="font-size:16px; font-weight:bold;"> Điện thoại di động NewStyle</span>
+                    <br />
+                    <span style="font-size:15px;"><span class="glyphicon glyphicon-home"></span>&nbsp; 3/2 Cần Thơ </span>
+                    <br />  <span style="font-size:15px;"><span class="glyphicon glyphicon-earphone"></span>&nbsp; 0913928607</span>
+                </div>
+                <div style="width:100%; height:100px;float:left; border:1px solid black;margin-top:20px;padding-left:10px;">
+                    <span style=" font-size:17px;font-weight:bold;">Nhân Viên Tạo</span>
+                    <br /> <span style="margin-left:30px;">Hoàng Đông </span>
+                    <br /><span style="font-size:17px;font-weight:bold;">Kho bán</span>
+                    <br /><span style="margin-left:30px;">Kho trung tâm</span>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal Cancel -->
+        <div id="modalCancel" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalCenterTitle">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Xác nhận hủy đơn hàng!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-2">
+                                Lý do
+                            </div>
+                            <div class="col-10">
+                                <input type="text" name="lydo" style="width:100%;" required id="iputLydo" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                id="btnCancelOrder"
+                                data-idCancel="@Model.OrderInOrderDetail.Id">
+                            Lưu
+
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Modal Email -->
+        <div class="modal fade" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Cập Nhật Email</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span>Email hiện tại của khách</span><br />
+                        <label for="email"><b>Email</b></label>
+                        <input type="text" value="@Model.OrderInOrderDetail.Email" style="width:350px;" name="email" id="txtemail" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                id="btnEditEmaill"
+                                data-idemail="@Model.OrderInOrderDetail.Id">
+                            Lưu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Dia Chỉ -->
+        <div class="modal fade" id="modalDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Cập Nhật Địa Chỉ</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Địa chỉ hiện tại của khách
+                        <div class="row">
+                            <div class="col-3"><b>SDT:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.Phone" name="email1" id="Phone1" required><br />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3"><b>Địa Chỉ:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.Address" name="DiaChi1" id="DiaChi1" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3"><b>Thành Phố:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.City" name="ThanhPho1" id="ThanhPho1" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                id="btnEDitDiaChi"
+                                data-idDiaChi="@Model.OrderInOrderDetail.Id">
+                            Lưu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>

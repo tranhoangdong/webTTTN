@@ -1,0 +1,556 @@
+﻿@using PagedList.Mvc; @*//import this so we get our HTML Helper*@
+@using PagedList; @*//import this so we can cast our list to IPagedList (only necessary because ViewBag is dynamic)*@
+
+@{
+    @model CodeFirst1.ViewModels.ProductsViewModel
+    ViewBag.Title = "Điện thoại NewStyle";
+}
+<div class="col-lg-9">
+    <div class="shop-product-wrapper res-xl res-xl-btn">
+        <div class="shop-bar-area">
+            <div class="shop-bar pb-60">
+                <div class="shop-found-selector">
+                    <div class="shop-found">
+                        <div class="row" style="width: 705px;height: 47px;float:left;" id="img-logo">
+                            @foreach (var item in Model.ManufactureProducts)
+                            {
+                                <a href="@Url.Action("SearchProduct", "Home", new { Manufacture = item.Name, giaMin = 0 , giaMax = 100000000000000 , a ="a" })" id="btnhsx">
+                                    <img src="~/image/AnhDienThoai/@item.image" />
+                                </a>
+                            }
+                         
+                        </div>
+                    </div>
+                    <div class="shop-selector">
+                        
+                    </div>
+                </div>
+                <div class="shop-filter-tab">
+                    <div class="shop-tab nav" role=tablist>
+                        <a class="active" href="#grid-sidebar1" data-toggle="tab" role="tab" aria-selected="false">
+                            <i class="ti-layout-grid4-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="shop-product-content tab-content" id="div_product">
+                <div id="grid-sidebar1" class="tab-pane fade active show">
+                    <div class="row">
+                        @foreach (var item in Model.Products)
+                        {
+                         <div class="col-lg-6 col-md-6 col-xl-3">
+    <div class="product-wrapper mb-30" style="border: 1px solid #ccc;padding:2px;">
+        <div class="product-img">
+            <a>
+                <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:200px; height:256px;">
+            </a>
+            @if (item.IsKM == true)
+            {
+                <span class="khuyenmai">@item.Ratio%</span>
+            }
+            @if (item.isGift == true)
+            {
+                <div>
+                    <div class="tooltip1">
+                        <span class="tooltiptext1">
+                            <span style="margin-left:-81px; font-family: Roboto-Bold;font-weight: bold;"><i class="ti-gift"></i> Phần quà :</span>
+                            <br /><span style=" font-family: Roboto-Bold;">  @item.InfoGift</span>
+                        </span>
+                    </div>
+                </div>
+            }
+
+            <div class="product-action">
+
+                <a class="add-del-favorive"   data-status="@(item.Favorive==true ? "2": "1")" data-idCategory="@item.CategoryId" data-id-sp="@item.Id" title=" @(item.Favorive == true ?"Xóa khỏi sản phẩm yêu thích" : "Thêm vào sản phẩm yêu thích") " style="cursor:pointer;">
+
+                    <div class="favorite-true">
+                        @if (item.Favorive == true)
+                        {
+                            <img id="img-@item.Id" src="~/image/heart.png" style="width: 23px;height: 22px;" />
+                        }
+                        else
+                        {
+                            <img id="img-@item.Id" src="~/image/black-heart.jpg" style="width: 23px;height: 22px;" />
+                        }
+                    </div>
+                </a>
+                @if (item.Quantity > 0)
+                {
+                }
+                else
+                {
+                    <a class="animate-top" title="Đã hết hàng" style="cursor:pointer;color:white;">
+                        <i class="pe-7s-close-circle"></i>
+                    </a>
+                }
+
+                <a class="animate-right" title="Quick View" data-toggle="modal" data-target="#@item.Id-model" style="cursor:pointer;color:white;">
+                    <link rel="stylesheet" href="~/Content/assets/css/jquery-ui.css">
+                    <i class="pe-7s-look"></i>
+                </a>
+                <a class="animate-right" title="Go to Detail" style="cursor:pointer;color:white;" onclick="location.href='@Url.Action("Detail", "Home", new { id = item.Id})'">
+                    <i class="ti-shift-right"></i>
+                </a>
+            </div>
+        </div>
+        <div class="product-content" style="margin-left:9px;">
+            <h4 id="ten-sp" style="color:#333; overflow:hidden;display:-webkit-box;"><a href="#"> @item.Name </a></h4>
+            @if (item.IsKM == true)
+            {
+                <span style="color:#e10c00;line-height:14px;font-size:14px;">@String.Format("{0:0,0}", item.PriceKM) VNĐ</span><br />
+                <strike style="color:#222;font-size:12px;">@item.PriceOut </strike>
+
+            }
+            else
+            {
+                <span style="color:#e10c00;line-height:15px;font-size:14px;"> @item.PriceOut </span><br />
+                <striker>&nbsp;</striker>
+            }
+        </div>
+    </div>
+</div>
+
+<!--Modal-->
+
+<div class="modal fade" id="@item.Id-model" tabindex="-1" role="dialog" aria-hidden="true">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span class="pe-7s-close" aria-hidden="true"></span>
+    </button>
+    <div class="modal-dialog modal-quickview-width" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="qwick-view-left">
+                    <div class="quick-view-learg-img">
+                        <div class="quick-view-tab-content tab-content">
+                            <div class="tab-pane active show fade" id="@item.Id-1" role="tabpanel">
+                                <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:320px; height:380px;">
+                            </div>
+                            <div class="tab-pane fade" id="@item.Id-2" role="tabpanel">
+                                <img src="~/image/AnhDienThoai/@item.Image2" alt="" style="width:320px; height:380px;">
+                            </div>
+                            <div class="tab-pane fade" id="@item.Id-3" role="tabpanel">
+                                <img src="~/image/AnhDienThoai/@item.Image3" alt="" style="width:320px; height:380px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quick-view-list nav" role="tablist">
+                        <a class="active" href="#@item.Id-1" data-toggle="tab" role="tab">
+                            <img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:100px;height:112px;">
+                        </a>
+                        <a href="#@item.Id-2" data-toggle="tab" role="tab">
+                            <img src="~/image/AnhDienThoai/@item.Image2" alt="" style="width:100px;height:112px;">
+                        </a>
+                        <a href="#@item.Id-3" data-toggle="tab" role="tab">
+                            <img src="~/image/AnhDienThoai/@item.Image3" alt="" style="width:100px;height:112px;">
+                        </a>
+                    </div>
+                </div>
+                <div class="qwick-view-right">
+                    <div class="qwick-view-content">
+                        <h3>@item.Name</h3>
+                        @if (item.IsKM == true)
+                        {
+                            <div class="price">
+                                <span class="new">@String.Format("{0:0,0}", item.PriceKM) VNĐ</span>
+                                <span class="old">@item.PriceOut</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="price">
+                                <span class="new">@item.PriceOut  </span>
+                            </div>
+                        }
+                        @if (item.Quantity > 0)
+                        {
+                            <div class="ktrahang">
+                                <i class="pe-7s-check"></i><span> &nbsp;Còn Hàng</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="ktrahang" style="color:red;">
+                                <i class="pe-7s-check"></i><span>Sản phẩm hiện hết hàng</span>
+                            </div>
+                        }
+                       
+                        <div class="detailssp">
+                            <table style="height: 228px;width: 457px;">
+                                <tr>
+                                    <td>
+                                        <span>Hãng sản xuất:</span>
+                                    </td>
+                                    <td>
+                                        @item.Manufacturer
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Hệ điều hành:</span>
+                                    </td>
+                                    <td>
+                                        @item.OperatingSystem
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Camera trước:</span>
+                                    </td>
+                                    <td>
+                                        @item.FrontCamera
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Camera sau:</span>
+                                    </td>
+                                    <td>
+                                        @item.RearCamera
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Ram:</span>
+                                    </td>
+                                    <td>
+                                        @item.Ram
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>CPU:</span>
+                                    </td>
+                                    <td>
+                                        @item.CPU
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Bộ nhớ trong:</span>
+                                    </td>
+                                    <td>
+                                        @item.InternalMemory
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Sim:</span>
+                                    </td>
+                                    <td>
+                                        @item.Sim
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Pin:</span>
+                                    </td>
+                                    <td>
+                                        @item.Battery
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span>Bảo hành:</span>
+                                    </td>
+                                    <td>
+                                        @item.Guarantee tháng
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="km">
+                            @if (item.IsKM == true)
+                            {
+                                <fieldset>
+                                    <legend style="margin-left:20px;color:#0c3;font-size:20px;">Khuyến mãi:</legend>
+                                    <div class="detailssp" style="margin-left:10px;">
+                                        <ul>
+                                            <li> <span>Tình trạng:</span> Đang được hưởng khuyến mãi dành riêng cho một số sản phẩm</li>
+                                            <li> <span>Thời gian:</span>Từ ngày @item.FromDay đến ngày @item.ToDay</li>
+                                            <li><span>Tỉ lệ:</span> @item.Ratio%</li>
+                                            <i style="margin-left:20px;">@item.Content</i>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            }
+                            else
+                            {
+                                <div></div>
+                            }
+                        </div>
+                        <div class="quickview-plus-minus">
+                            <div class="cart-plus-minus">
+                                <input type="number" value="@(item.Quantity > 0 ? 1: 0)" name="qtybutton" max="@item.Quantity" min="@(item.Quantity > 0 ? 1 : 0)" class="cart-plus-minus-box">
+                            </div>
+                            @if (item.Quantity > 0)
+                            {
+                                <div class="quickview-btn-cart">
+                                    <a class="btn-hover-black" href="#"><i class="ti-shopping-cart"></i>Mua hàng</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="quickview-btn-cart">
+                                    <a class="btn-hover-black" style="cursor:not-allowed !important;">Đã hết hàng</a>
+                                </div>
+                            }
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                        }
+                    </div>
+                </div>
+               
+            </div>
+            <hr id="hrsp"/>
+            <div style="float:left; height:auto; width:100%" class="row">
+                @foreach (var item in Model.Accessories)
+                {
+                    <div class="col-3 card-anh-linhkien" style="padding:5px;border:1px solid #eee;float:left;margin-top:10px;">
+                        <div style="float:left;height:116px;width:100%;text-align:center;">
+                            <img src="~/image/AnhDienThoai/@item.Image" style="height:110px;width: 205px;" class="anh-lk" />
+                        </div>
+                        <div id="ten-sp-linhkien" title="@item.Name">@item.Name</div>
+                        <br />
+                        <span style="color: #e10c00;line-height: 15px;font-size: 14px;">@item.PriceOut </span>
+                        <br />
+                        <span>NSX: @item.Manufacture </span>
+                        <div id="like" class="row" style=" position:relative;display:inline-block;bottom:0px !important;float:left;width:100%;margin-bottom:0px !important;">
+                            <div style="float:left;margin-left: 180px;margin-top: -5px;">
+                                <i class="pe-7s-look" id="xem-linh-kien" data-id-product="@item.Id" style="font-size:31px;cursor:pointer;" data-toggle="modal" data-target="#modellinhkien-@item.Id"></i>
+                            </div>
+                            <a class="add-del-accessoriesld" data-idCategory="@item.CategoryId" data-status="@(item.isYT==true ? "2": "1")" data-id-sp="@item.Id" title=" @(item.isYT == true ?"Xóa khỏi sản phẩm yêu thích" : "Thêm vào sản phẩm yêu thích") " style="cursor:pointer;">
+                                <div class="favorite-true">
+                                    @if (item.isYT == true)
+                                    {
+                                        <img id="imglk-@item.Id" src="~/image/heart.png" style="width: 23px;height: 22px;float:right;" />
+                                    }
+                                    else
+                                    {
+                                        <img id="imglk-@item.Id" src="~/image/black-heart.jpg" style="width: 23px;height: 22px;float:right;" />
+                                    }
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modellinhkien-@item.Id" tabindex="-1" role="dialog" aria-hidden="true">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span class="pe-7s-close" aria-hidden="true"></span>
+                        </button>
+                        <div class="modal-dialog modal-quickview-width" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="qwick-view-left">
+                                        <div class="quick-view-learg-img">
+                                            <div class="quick-view-tab-content tab-content">
+                                                <div class="tab-pane active show fade" id="@item.Id-lk" role="tabpanel">
+                                                    <img src="~/image/AnhDienThoai/@item.Image" alt="" style="width:320px; height:380px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="quick-view-list nav" role="tablist">
+                                            <a class="active" href="#@item.Id-lk" data-toggle="tab" role="tab">
+                                                <img src="~/image/AnhDienThoai/@item.Image" alt="" style="width:100px;height:112px;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="qwick-view-right">
+                                        <div class="qwick-view-content">
+                                            <h3>@item.Name</h3>
+                                                <div class="price">
+                                                    <span class="new">@item.PriceOut  </span>
+                                                </div>
+                                            @if (item.Quantity > 0)
+                                            {
+                                                <div class="ktrahang">
+                                                    <i class="pe-7s-check"></i><span> &nbsp;Còn Hàng</span>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="ktrahang" style="color:red;">
+                                                    <i class="pe-7s-check"></i><span>Sản phẩm hiện hết hàng</span>
+                                                </div>
+                                            }
+                                            <div class="detailssp">
+                                                <table style="height: 228px;width: 457px;">
+                                                    <tr>
+                                                        <td>
+                                                            <span>NSX: @item.Manufacture</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description1</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description2</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description3</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description4</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description5</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description6</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>@item.Description7</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <span>Dành cho các dòng điện thoại:@item.Keyword</span>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="quickview-plus-minus">
+                                                <div class="cart-plus-minus">
+                                                    <input type="number" id="slsp-linhkien-@item.Id" value="@(item.Quantity > 0 ? 1: 0)" name="qtybutton" max="@item.Quantity" min="@(item.Quantity > 0 ? 1 : 0)" class="cart-plus-minus-box">
+                                                </div>
+                                                @if (item.Quantity > 0)
+                                                {
+                                                    <div class="quickview-btn-cart">
+                                                        <a class="btn-hover-black AddToCartAccessories" data-idsanpham="@item.Id" href="#"><i class="ti-shopping-cart"></i>Mua hàng</a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="quickview-btn-cart">
+                                                        <a class="btn-hover-black" style="cursor:not-allowed !important;">Đã hết hàng</a>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+
+        </div>
+    </div>
+    @*<div class="pagination-style mt-30 text-center">
+            <ul>
+                <li><a href="#"><i class="ti-angle-left"></i></a></li>
+                <li><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">...</a></li>
+                <li><a href="#">19</a></li>
+                <li class="active"><a href="#"><i class="ti-angle-right"></i></a></li>
+            </ul>
+        </div>*@
+    <!-- output a paging control that lets the user navigation to the previous page, next page, etc -->
+    @Html.PagedListPager((IPagedList)Model.Products, page => Url.Action("Index", new { page }))
+</div>
+
+@section Left{
+    <div class="col-lg-3">
+        <div class="shop-sidebar mr-50">
+            <div class="sidebar-widget mb-50">
+                <h3 class="sidebar-title">Danh mục tìm kiếm:</h3>
+            </div>
+            <div class="sidebar-widget mb-45">
+                <h3 class="sidebar-title">Danh mục</h3>
+                <div class="sidebar-categories">
+                    @foreach (var manufactureProduct in Model.ManufactureProducts)
+                    {
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="@manufactureProduct.Name" name="manufacture">  @manufactureProduct.Name</label>
+                        <span class="number-product">@manufactureProduct.NumberProduct</span>
+                        <br>
+                    </div>
+                    }
+                </div>
+            </div>
+            @*<div class="sidebar-widget mb-40">
+                <h3 class="sidebar-title">Khoảng giá:</h3>
+                <div class="price_filter">
+                    <div id="slider-range"></div>
+                    <div class="price_slider_amount">
+                        <div class="label-input">
+                            <label>Giá : </label>
+                            <input type="text" id="amount" name="price" placeholder="Add Your Price" />
+                        </div>
+
+                    </div>
+                </div>
+            </div>*@
+            <div class="sidebar-widget mb-45">
+                <h3 class="sidebar-title">Mức giá</h3>
+                <div class="sidebar-categories">
+                    <label class="radio">
+                        <input type="radio" checked name="gia" value="0"> Tất cả giá
+                    </label>
+                    <br />
+                    <label class="radio">
+                        <input type="radio" name="gia" value="1"> Dưới 2 triệu
+                    </label>
+                    <br>
+                    <label class="radio">
+                        <input type="radio" name="gia" value="2"> Từ 2-10 triệu
+                    </label>
+                    <br />
+                    <label class="radio">
+                        <input type="radio" name="gia" value="3"> Từ 10-20 triệu
+                    </label>
+                    <br />
+                    <label class="radio">
+                        <input type="radio" name="gia" value="4"> Trên 20 triệu
+                    </label>
+                    <br />
+                </div>
+            </div>
+            <input class="btn btn-info" type="button" id="view-resulf" value="Xem kết quả" style="cursor:pointer;" />
+            <br />
+            <div class="sidebar-widget mb-50">
+                <br />
+                <h3 class="sidebar-title">Sản phẩm được yêu thích nhiều nhất</h3>
+                <div class="sidebar-top-rated-all">
+                    @foreach (var item in Model.favorateProduct)
+                    {
+                        <div class="sidebar-top-rated mb-30">
+                            <div class="single-top-rated">
+                                <div class="top-rated-img">
+                                    <a href="/Home/Detail?id=@item.Id"><img src="~/image/AnhDienThoai/@item.Image1" width="91" height="88" alt=""></a>
+                                </div>
+                                <div class="top-rated-text">
+                                    <h4><a href="#">@item.Name</a></h4>
+                                    <span>@item.PriceOut</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+}

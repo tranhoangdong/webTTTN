@@ -1,0 +1,28 @@
+﻿
+@model List<CodeFirst1.ViewModels.ProductViewModel>
+
+@foreach (var item in Model)
+{
+<div class="sidebar-top-rated mb-30" style="cursor:pointer;"  onclick="location.href='@Url.Action("Detail", "Home", new { id = item.Id})'">
+    <div class="single-top-rated">
+        <div class="top-rated-img">
+            <a href="#"><img src="~/image/AnhDienThoai/@item.Image1" alt="" style="width:91px; height:88px;"></a>
+        </div>
+        <div class="top-rated-text">
+            <h4><a href="#">@item.Name</a></h4>
+            <div class="top-rated-rating">
+                <ul>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                    <li><i class="pe-7s-star"></i></li>
+                </ul>
+            </div>
+            <span> @String.Format("{0:0,0}", item.Price) đ</span>
+        </div>
+    </div>
+</div>
+
+}
+

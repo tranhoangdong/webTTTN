@@ -1,0 +1,225 @@
+﻿
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CodeFirst1.ViewModels.CheckOutViewModel
+
+<!--Thông tin cần chuyển qua Trang này : User , Cart
+    Thông tin cần lấy đi: Order-->
+<div class="checkout-area ptb-100" style="width:100%;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="coupon-accordion">
+                    <!-- ACCORDION START -->
+                </div>
+            </div>
+        </div>
+        @using (Ajax.BeginForm("Luudonhang", "Cart", new AjaxOptions
+        {
+            UpdateTargetId = "",
+            HttpMethod = "POST",
+            OnSuccess = "",
+            OnBegin = "test()",
+            OnComplete = ""
+        },
+                      new { @id = "form-checkout" }))
+        {
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-12">
+                    <form action="#">
+                        <div class="checkbox-form">
+                            <h3>ĐIỀN ĐẦY ĐỦ THÔNG TIN</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Họ Tên: <span class="required">*</span></label>
+                                        @Html.EditorFor(x => x.CustomerViewModel.Name)
+                                    </div>
+
+                                    <span style="color:red;">
+                                        @Html.ValidationMessageFor(x => x.CustomerViewModel.Name)
+                                    </span>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Tên Tài Khoản: <span class="required">*</span></label>
+                                        @Html.EditorFor(x => x.CustomerViewModel.Account)
+                                    </div>
+                                    <span style="color:red;" id="ktratk"></span>
+                                    <span style="color:red;">
+                                        @Html.ValidationMessageFor(x => x.CustomerViewModel.Account)
+                                    </span>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        <label>Số điện thoại đặt hàng: <span class="required">*</span></label>
+                                        @Html.EditorFor(Model => Model.CustomerViewModel.Phone)
+                                        <br />
+                                        <span style="color:red;">
+                                            @Html.ValidationMessageFor(Model => Model.CustomerViewModel.Phone)
+                                        </span>
+                                        <br />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        @Html.LabelFor(x => x.CustomerViewModel.Address)
+                                        @Html.EditorFor(x => x.CustomerViewModel.Address)
+                                    </div>
+
+                                    <span style="color:red;">
+                                        @Html.ValidationMessageFor(x => x.CustomerViewModel.Address)
+                                    </span>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        @Html.LabelFor(x => x.CustomerViewModel.City)
+                                        @Html.EditorFor(x => x.CustomerViewModel.City)
+                                    </div>
+
+                                    <span style="color:red;">
+                                        @Html.ValidationMessageFor(x => x.CustomerViewModel.City)
+                                    </span>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="checkout-form-list">
+                                        @Html.LabelFor(x => x.CustomerViewModel.Email)
+                                        @Html.EditorFor(Model => Model.CustomerViewModel.Email)
+                                    </div>
+                                    <label style="color:red;">
+                                        @Html.ValidationMessageFor(Model => Model.CustomerViewModel.Email)
+                                    </label>
+                                </div>
+                                <div class="col-md-12">
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 col-md-12 col-12">
+                    <div class="your-order">
+                        <h3>Đơn hàng của bạn</h3>
+                        <div class="your-order-table table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="product-total">Ảnh</th>
+                                        <th class="product-name">Sản phẩm</th>
+                                        <th class="product-total">Giá + SL</th>
+                                        <th class="product-total">Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var cart in Model.Carts)
+                                    {
+                                        <tr class="cart_item">
+                                            <td>
+                                                <img src="~/image/AnhDienThoai/@cart.Image" width="140" height="80">
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <span style="color:#428bca;">  @cart.NameProduct </span>
+                                            </td>
+                                            <td class="product-total">
+                                                <span class="amount"> @string.Format("{0:0,0}", @cart.Price)</span> <strong class="product-quantity"> × @cart.Quantity</strong>
+                                            </td>
+                                            <td class="product-total">
+                                                <span class="amount">@String.Format("{0:0,0}", cart.IntoMoney)  NVĐ</span>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th>Tổng cộng: </th>
+                                        <td style="text-align:left;">
+                                            <strong><span class="amount">@String.Format("{0:0,0}", Model.Carts.Sum(m => m.IntoMoney)) VNĐ</span></strong>
+                                            <input type="hidden" value="@Model.Carts.Sum(x=>x.IntoMoney)" id="tong-cong-hide" />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <table style=" height:30px;margin-top:20px;width:60%;margin-left:49px; float:right;line-height:32px;">
+                            <tr style="border-bottom:1px solid #ccc;">
+                                <td>Phí vận chuyển:</td>
+                                <td style="text-align:left;width: 45px;">0 VNĐ</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid #ccc;">
+                                <td>Quy đổi điểm tích lũy</td>
+                                <td><i class="ti-info-alt" style="color:red; font-size:17px; cursor:pointer;" id="show-info"></i></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div id="info-km" style="font-family: 'Poppins', sans-serif; display:none;">
+                                        <span style="font-weight:bold; color:red; font-size:19px;text-align:center;"> &nbsp; &nbsp; Đổi điểm tích lũy </span><br />
+                                        <i class="ti-angle-double-right"></i><span class="thong-tin-dtl"> Mỗi 10.000đ mua hàng thì khách hàng được tích lũy 1 điểm </span><br />
+                                        <i class="ti-angle-double-right"></i><span class="thong-tin-dtl"> Khách hàng có thể dùng điểm để đổi lấy tiền thanh toán, mỗi 500 điểm đổi được 100.000đ</span><br />
+                                        <i class="ti-angle-double-right"></i><span class="thong-tin-dtl"> Không thể vượt quá giá trị đơn hàng</span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><i class="ti-server" style="color:#428bca;"></i>&nbsp; Điểm tích lũy của bạn: </td>
+                                <td><span id="tong-dtl"></span> @String.Format("{0:0,0}", Model.CustomerViewModel.Point) </td>
+                                <td><input type="hidden" value="@Model.CustomerViewModel.Point" id="tong-dtl-hide" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Chọn điểm <input type="number" value="0" max="@Model.CustomerViewModel.Point" min="0" step="500" id="ip-dtl" style="height:30px; width:100px;margin-left:10px;" /> Max(&nbsp;<span id="diem-max"></span>&nbsp;)</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <td style="width:40%;">Tổng:</td>
+                                            <td style="width:60%;text-align:right;"><span>@String.Format("{0:0,0}", Model.Carts.Sum(m => m.IntoMoney))</span> VNĐ</td>
+                                            <td> <input type="hidden" id="tong-tien-hide" value="@Model.Carts.Sum(x=>x.IntoMoney)" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:60%;">Điểm dùng: <strong><span id="diem-tl">0</span></strong> <i class="ti-arrows-horizontal" style="color:#428bca;"></i></td>
+                                            <td style="width:40%;text-align:right;">- &nbsp;<span id="doi-tien">0</span> VNĐ</td>
+                                            <td><input type="hidden" value="0" id="doi-tien-hide" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:40%;">Thanh toán:</td>
+                                            <td style="width:60%;text-align:right;"><strong> <span id="thanh-toan"></span></strong> VNĐ</td>
+                                            <td><input type="hidden" id="thanh-toan-hide" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><i>( Điểm tích lũy sau khi thanh toán đơn hàng này (không tính dùng điểm): <span style="color:red;"> @String.Format("{0:0,0}", (Model.Carts.Sum(x => x.IntoMoney) / 10000))</span>  )</i></td>
+
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                <div class="panel-group" id="faq">
+
+                                </div>
+                                <div class="order-button-payment">
+                                    <input type="submit" id="dangkyvaluu" data-value="@Request.RequestContext.HttpContext.Session["UserId"]" value="Xác nhận" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+
+

@@ -1,0 +1,23 @@
+﻿@model List<CodeFirst1.ViewModels.Comment>
+
+@foreach (var item in Model)
+{
+<div class="single-blog-replay" id="cmt-box">
+    <div class="replay-img">
+        <a href="#"><img src="~/image/user.png" alt="" style="width:70px; height:70px;"></a>
+    </div>
+    <div class="replay-info-wrapper">
+        <div class="replay-info">
+            <div class="replay-name-date">
+                <h5><a href="#">@item.Name</a></h5>
+                <span>@item.Time</span>
+            </div>
+            <div class="replay-btn">
+                
+            </div>
+        </div>
+        <p>@item.Content</p>
+    </div>
+</div>
+}
+

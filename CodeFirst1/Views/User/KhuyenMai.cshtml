@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "KhuyenMai";
+    Layout = "~/Views/Shared/_Admin.cshtml";
+}
+
+<div class="page-title">
+    <div class="title_left">
+        <h3>Thêm chương trình khuyến mãi </h3>
+    </div>
+</div>
+<div class="clearfix"></div>
+@using (Html.BeginForm("CodeThemKhuyenMai", "User", FormMethod.Post, new { @class = "form-horizontal form-label-left", id = " demo-form2", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+
+                    <h2>Thêm khuyến mãi <small>Điền đầy đủ thông tin</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu"></ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Từ ngày <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="date" name="tuNgay" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Đến ngày <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="date" name="denNgay" required>
+                        </div>
+                    </div>
+                    <br />
+                    <div><span style="color:red;">@ViewBag.Loi</span></div><br />
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Tỉ lệ <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="number" id="tile-km" name="ratio" min="0" max="100" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
+                            Nội dung <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" id="name-sp" name="Content" required="required" class="form-control col-md-7 col-xs-12">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+            <a class="btn btn-primary" href="/User/Index">Hủy</a>
+            <button type="submit" class="btn btn-success">Thêm</button>
+            <a class=" btn bg-danger" href="/User/Promotion?id=0">Xem khuyến mãi</a>
+        </div>
+    </div>
+}
+@model List<CodeFirst1.ViewModels.PromotionModel>
+<div class="col-md-12">
+    <div class="white-box">
+        <h2 class="header-title">Danh sách hãng sản xuất</h2>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Từ ngày</th>
+                        <th>Đến ngày</th>
+                        <th>Tỉ lệ</th>
+                        <th>Nội dung khuyến mãi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach (var item in Model)
+                  {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.tuNgay</td>
+                            <td>@item.denNgay</td>
+                            <td>@item.ratio %</td>
+                            <td>@item.Content</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

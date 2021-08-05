@@ -1,0 +1,111 @@
+﻿
+
+
+#chitiet-container {
+    background: #eff0f5;
+    padding: 10px;
+    height: auto;
+    width: 100%;
+    float: left;
+}
+
+#chitiet-top {
+    height: auto;
+    width: 100%;
+    float: left;
+}
+
+#Chitiet-tongtien {
+    background: #FFF;
+    height: 50px;
+    width: 100%;
+    float: left;
+    margin-left: 0px;
+}
+
+#partial-sanpham {
+    height: auto;
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+
+#top-partial-sanpham {
+    background: #FFF;
+    height: 50px;
+    width: 100%;
+    margin-left: 0px;
+    float: left;
+}
+
+#partial {
+    background: #FFF;
+    height: 138px;
+    width: 100%;
+    margin-left: 0px;
+    padding: 10px;
+    float: left;
+    margin-top: 10px;
+}
+
+#chitiet-bottom {
+    margin-top: 10px;
+    height: auto;
+    width: 100%;
+    float: left;
+}
+
+#diachi-giao {
+    background: #FFF;
+    margin-bottom: 10px;
+    min-height: 126px;
+    height: auto;
+    padding: 10px;
+    width: 50%;
+    float: left;
+}
+
+#sum-tien {
+    background: #FFF;
+    min-height: 126px;
+    height: auto;
+    padding: 10px;
+    margin-left: 0px;
+    width: 48%;
+    margin-left: 15px;
+    float: left;
+}
+
+#ngay-dat {
+    color: #cec1c1;
+}
+
+#rightt {
+    text-align: right;
+}
+
+#chu-xanh {
+    color: green;
+}
+
+#top-5px {
+    margin-top: 5px;
+}
+
+#traii {
+    text-align: left;
+}
+
+#anh-ctus {
+    width: 194px;
+    height: 112px;
+}
+
+#Ten-san-Pham {
+    font-weight: bold;
+}
+
+#Tong-tien {
+    font-weight: bold;
+    font-size: 19px;
+}

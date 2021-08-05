@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "XuatPhieu";
+    Layout = null;
+}
+
+@model CodeFirst1.ViewModels.XuatPhieuViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>In Phiếu</title>
+    <link href="~/XuatPhieuCSS/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/XuatPhieuCSS/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/XuatPhieuCSS/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/custom/XuatPhieu.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <a href="@Url.Action("Print", "User", new {id = Model.orderInOrderDetail.Id})">PDF</a>
+        <div id="InPhieu">
+
+            <div id="tt-Tencty" class="row">
+                <div class="col-3">
+                   @* <img src="~/image/AnhDienThoai/logo1.jpg" width="270" height="152" style="margin-left:-14px;margin-top:26px;" />*@
+                </div>
+                <div class="col-6 giua">
+                    <div style="margin-top:23px;">
+                        <span id="pg">Hóa đơn(@ViewBag.Nam @Model.orderInOrderDetail.Id)</span>
+                    </div>
+
+                    <span id="tdn">Phát hàng thu tiền đầu nhận</span><span id="gtdn"> @Model.orderInOrderDetail.Total đ</span>
+                    <br />
+                    <span id="cxh">XEM VÀ THỬ TRƯỚC KHI THANH TOÁN</span>
+                    <br />
+                    <span>Ngày lập phiếu (@Model.orderInOrderDetail.DateProcessing)</span>
+                </div>
+                <div class="col-3" style="padding:20px;">
+                    <span style="margin-top:20px;">QĐ số 19/2006/QĐ-BTC</span>
+                </div>
+            </div>
+            <div id="tt-chung">
+                <div id="ttngui-ngnhan" class="row">
+                    <div class="col-2">
+                        <div id="ddten">
+                            <span id="in-dam" style="font-size:20px; color:#52789e;">Tên công ty</span>
+                            <br />
+                            <span id="in-dam">Điện thoại</span>
+                            <br />
+                            <span id="in-dam">Địa chỉ</span>
+                        </div>
+                    </div>
+                    <div class="col-4" style="border-right:1px solid black;">
+                        <div id="ddten1" style="margin-left:0px !important;">
+                            <span>Điện thoại di động</span>
+                            <br />
+                            <span>0913 928 607</span>
+                            <br />
+                            <span>3/2 Cần Thơ </span>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div id="ddten">
+
+                            <span id="in-dam" style="font-size:20px; color:#52789e;">Người nhận:</span>
+                            <br />
+                            <span id="in-dam">Điện thoại</span>
+                            <br />
+                            <span id="in-dam">Địa chỉ</span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div id="ddten1" style="margin-left:0px !important;">
+                            <span>@Model.orderInOrderDetail.Name</span>
+                            <br />
+                            <span>@Model.orderInOrderDetail.Phone</span>
+                            <br />
+                            <span>@Model.orderInOrderDetail.Address Thành Phố @Model.orderInOrderDetail.City </span>
+                        </div>
+                    </div>
+                </div>
+                <div id="tt-hh-tien" class="row">
+                    <div class="col-8" style="border-bottom:1px solid black;">
+                        <span id="in-dam" style="font-size:20px; color:#52789e;">Hàng Hóa</span><span>&nbsp;&nbsp; Đặt ngày (@Model.orderInOrderDetail.OrderDate)</span>
+                        <div id="list-sp-td" class="row">
+                            <div class="col-2" style="font-weight:bold;">
+                                Ảnh
+                            </div>
+                            <div class="col-3" style="font-weight:bold;">
+                                Tên
+                            </div>
+                            <div class="col-1" style="font-weight:bold;">
+                                SL
+                            </div>
+                            <div class="col-2" style="font-weight:bold;">
+                                Giá
+                            </div>
+                            <div class="col-3" style="font-weight:bold;">
+                                Tổng
+                            </div>
+                            <div class="col-1" style="font-weight:bold;">
+                                ĐVT
+                            </div>
+                        </div>
+                        @Html.Partial("_XuatChiTiet", Model.sanPhamXuatPhieus)
+
+
+                    </div>
+                    <div class="col-4" style="margin-left:0px; border-left:1px solid black;">
+
+                        <div id="van-chuyen" class="row">
+                            <div class="col-6" style="text-align:right;">
+                                <div>
+                                    <span id="in-dam" style="font-size:20px; color:#52789e;">Vận Chuyển</span>
+                                </div>
+                                <div id="ddten1">
+                                    <span>Tổng số lượng</span>
+                                    <br />
+                                    <span>Phí vận chuyển</span>
+                                </div>
+                            </div>
+                            <div class="col-6" style="text-align:left;">
+                                <br />
+                                <div id="ddten1" style="margin-top: 6px;
+    margin-left: -14px;">
+                                    <span>@Model.orderInOrderDetail.tongSL</span>
+                                    <br />
+                                    <span>0 đ</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="cuoc-phi" class="row">
+                            <div class="col-6" style="text-align:right;">
+                                <div>
+                                    <span id="in-dam" style="font-size:20px; color:#52789e;">Cước phí</span>
+                                </div>
+                                <div id="ddten1">
+                                    <span>Tạm tính</span>
+                                    <br />
+                                    <span>Điểm đã dùng</span>
+                                    <br />
+                                    <span style="font-weight:bold;font-size:18px;">Tổng thu</span>
+                                </div>
+                            </div>
+                            <div class="col-6" style="text-align:right;">
+                                <br />
+                                <div id="ddten1" style="margin-top: 6px;
+    margin-left: -14px;">
+                                    <span>@String.Format("{0:0,0}", Model.orderInOrderDetail.ProvisionalAmount) VNĐ</span>
+                                    <br />
+                                    <span> @String.Format("{0:0,0}", Model.orderInOrderDetail.PointsUse) </span>
+                                    <br />
+                                    <span>@String.Format("{0:0,0}", Model.orderInOrderDetail.Total) VNĐ</span>
+                                    <br />
+                                    <i style="font-size:14px;">(Giá đã bao gồm cả thuế )</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ky-nhan" class="row">
+                    <div class="col-6" style="    padding-left: 25px;
+    height: 134px;">
+                        <span id="in-dam" style="font-size:20px; color:#52789e;">Lưu ý khi chuyển phát</span>
+                        <br />
+                        <span style="font-size:16px;font-style:italic;padding:10px; ">Có vấn đề trong quá trình phát hàng liên hệ số điện thoại ở ô thông tin người gửi. Trường hợp không thể gọi được cho người gửi, gọi 0913928607 để công ty hỗ trợ bạn.</span>
+                        <br />  <span style="font-size:16px;font-style:italic;padding:10px; ">Sau 2 ngày không phát được liên hệ HTKH điện thoại để phối hợp xử lý</span>
+                    </div>
+                    <div class="col-6" style="
+    text-align: center;
+    height: 134px;">
+                        <div class="row" style="width:103%; height:200px;float:left;">
+                            <div class="col-6" style="height:134px;border-left:1px solid black;">
+                                <span id="in-dam" style="font-size:20px; color:#52789e;"> Chuyển từ </span>
+                                <br />
+                                <br />
+
+                                <span id="in-dam" style="font-size:16px; color:#52789e;">@*@Session["Ten_Admin"].ToString()*@ Hoàng Đông </span>
+                            </div>
+                            <div class="col-6" style="height:134px;border-left:1px solid black;">
+                                <span id="in-dam" style="font-size:20px; color:#52789e;">Người nhận </span>
+                                <br />
+                                <br />
+                                <span id="in-dam" style="font-size:16px; color:#52789e;">@Model.orderInOrderDetail.Name </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "AdminLogin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model CodeFirst1.ViewModels.Admin
+
+<div style="width:100%; text-align:center;font-weight:bold;"><h2>Đăng nhập</h2></div>
+
+<div class="register-area ptb-100" style="width:100%;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 col-12 col-lg-6 col-xl-6 ml-auto mr-auto">
+                <div class="login">
+                    <div class="login-form-container">
+                        <div class="login-form">
+                            @using (Html.BeginForm("AdminLogin", "Login", FormMethod.Post))
+                            {
+                                @Html.LabelFor(Model => Model.Account)
+                                @Html.EditorFor(Model => Model.Account)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Account)
+                                </span><br />
+                                @Html.LabelFor(Model => Model.Password)
+                                @Html.EditorFor(Model => Model.Password)
+                                <span style="color:red;">
+                                    @Html.ValidationMessageFor(Model => Model.Password)
+                                </span> <br />
+                                <span style="color:red;">@Html.DisplayFor(Model => Model.LoginErrorMessage)</span>
+                                @*<input type="text" name="user-name" placeholder="Tên đăng nhập">
+                                    <input type="password" name="user-password" placeholder="Mật khẩu">*@
+                                <div class="button-box">
+                                    <div class="login-toggle-btn">
+                                        <a href="#">Quên mật khẩu?</a>
+                                    </div>
+                                    <button type="submit" class="default-btn floatright" style="cursor:pointer;">Đăng nhập</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

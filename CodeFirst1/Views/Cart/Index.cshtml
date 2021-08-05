@@ -1,0 +1,103 @@
+﻿@model List<CodeFirst1.ViewModels.Cart>
+@{
+}
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+    @if (Model == null || Model.Count == 0)
+
+    {
+        <div class="gio-hang-rong">
+            <h3>Không có sản phẩm nào trong giỏ hàng</h3>
+            <br />
+            <a class="btn btn-success" href="~/Home/">Tiếp tục mua sắm</a>
+        </div>
+    }
+    @if (Model != null && Model.Count != 0)
+    {
+        <div class="row" style="width:100%;" id="td-row">
+            <div class="col-1">
+               
+            </div>
+            <div class="col-9">
+                <div id="ton-tai-gio-hang">
+                    <h2 style="margin-bottom: -43px; margin-top: 24px;">GIỎ HÀNG</h2>
+                    <div class="table-responsive" style="margin-top: 65px;">
+                        <table class="table table-bordered">
+                            <tr style="background-color:#f6f6f6;">
+                                <td class="text-center">Ảnh</td>
+                                <td class="text-center">Tên</td>
+                                <td class="text-center">Đơn giá</td>
+                                <td class="text-center">Số lượng</td>
+                                <td class="text-center">Thành tiền</td>
+                                <td class="text-center">Xóa</td>
+                            </tr>
+                            @foreach (var item in Model)
+                            {
+                            <tr id="td-@item.IdProduct-@item.CategoryID">
+                                <td class="text-center"><img src="~/image/AnhDienThoai/@item.Image" style="height: 80px; width: 74px;" /></td>
+                                <td class="text-center"style="color:#458ad6;font-weight:600;">@item.NameProduct</td>
+                                <td class="text-center">@String.Format("{0:0,0}", item.Price) VNĐ </td>
+                                <td class="">
+                                    <input type="hidden" name="masanpham" value="@item.IdProduct" />
+                                    <input type="number" min="1" max="@item.InventoryNumber" value=" @item.Quantity" name="txtsoluong" id="qty-@item.IdProduct-@item.CategoryID" />
+                                    <i class="btn btn-success" id="capnhat-giohang" data-idprd="@item.IdProduct" data-CategoryId="@item.CategoryID" data-nameprd="@item.NameProduct" data-soluong="@item.Quantity" stype="submit" style="width: 50px; cursor:pointer;">Sửa</i>
+                                </td>
+                                <td class="text-center"><span id="into-money-@item.IdProduct-@item.CategoryID"> @String.Format("{0:0,0}", item.IntoMoney) </span> VNĐ</td>
+                                <td class="text-center">
+                                    <a @*onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?');"*@ data-toggle="modal" data-target="#modalDelele-@item.IdProduct-@item.CategoryID"><img style="width:50px; height:50px; cursor:pointer; " src="~/image/xoa1.jpg" title="Xóa khỏi giỏ hàng" /></a>
+                                </td>
+                            </tr>
+
+                            }
+                            <tr>
+                                <td colspan=3 class="text-right"> Tổng số lượng</td>
+                                <td class="text-center"><span id="tong-so-luong"> @Model.Sum(n => n.Quantity)</span></td>
+                                <td colspan=2 class="text-center">Tổng tiền: <span id="tong-tien" style="font-weight:bold;color:red;">@String.Format("{0:0,0}", @Model.Sum(m => m.IntoMoney))</span> </td>
+                            </tr>
+                        </table>
+                        @foreach (var item in Model)
+                        {
+                            <div class="modal fade" id="modalDelele-@item.IdProduct-@item.CategoryID">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header" style="padding:10px;">
+                                            <h4 class="modal-title">Xóa</h4>
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                                        </div>
+                                        <div class="modal-body" style="padding:20px;">
+                                            <span> Xóa <strong>@item.NameProduct</strong> ra khỏi giỏ hàng?</span>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                            <button type="button" id="xoa-khoi-gio-hang" data-CategoryId-lk="@item.CategoryID" data-idsp="@item.IdProduct" data-tensp="@item.NameProduct" class="btn btn-success">OK</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                @if (Session["UserId"] != null)
+                {
+                    <button class="btn btn-primary" id="dat-hang" data-value="@Request.RequestContext.HttpContext.Session["UserName"]" style="width:auto;cursor:pointer;">Đặt hàng</button>
+                }
+                @if (Session["UserId"] == null)
+                {
+                    <h4>Đến trang thanh toán đơn hàng</h4><br />
+                    <button class="btn btn-primary" id="dat-hang" data-value="@Request.RequestContext.HttpContext.Session["UserName"]" style="width:auto;cursor:pointer;">Tôi có tài khoản</button>
+                    <br />
+                    <br />
+                    <a class="btn btn-primary" id="dat-hang-khong-tk"href="/Cart/KhongTK"  style="width:auto;cursor:pointer;">Tôi không có tài khoản</a>
+                }
+
+            </div>
+        </div>
+    }
+</body>
+

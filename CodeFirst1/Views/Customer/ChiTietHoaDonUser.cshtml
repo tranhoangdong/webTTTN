@@ -1,0 +1,216 @@
+﻿@{
+    Layout = null;
+}
+@model CodeFirst1.ViewModels.OrderDetailsViewModel
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Chi Tiết Hóa Đơn</title>
+        <link href="~/XuatPhieuCSS/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/XuatPhieuCSS/bootstrap.css" rel="stylesheet" />
+        <link href="~/Content/custom/ChiTietDonHangUser.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link href="~/Content/Toast/Default.css" rel="stylesheet" />
+        <link href="~/Content/Toast/toastyfy.css" rel="stylesheet" />
+        <link href="~/Content/Toastify/Toastr.css" rel="stylesheet" />
+        <link href="~/Content/Toastify/toaststyle.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <div id="chitiet-container">
+            <h2>Chi Tiết Đơn Hàng </h2>
+            <div id="chitiet-top">
+                <div id="Chitiet-tongtien" class="row">
+                    <div class="col-5">
+                        Đơn hàng #@Model.OrderInOrderDetail.Id
+                        <br />
+                        <span id="ngay-dat">Đặt ngày @Model.OrderInOrderDetail.OrderDate</span>
+                    </div>
+                    <div class="col-3">
+                    </div>
+                    <div class="col-4" id="rightt">
+                    </div>
+                </div>
+                <div id="partial-sanpham">
+                    <div id="top-partial-sanpham" class="row">
+                        <div class="col-5">
+                            <span class="glyphicon glyphicon-gift" id="top-5px"></span> <span>Kiện hàng 1</span>
+                            <br />
+                            <span>Bán bởi <span id="chu-xanh">Điện thoại Trúc Phạm</span></span>
+                        </div>
+                        <div class="col-3">
+                            <br />
+                        </div>
+                        <div class="col-4" id="rightt">
+                            <div style="margin-top:9px;">
+                                @if (Model.OrderInOrderDetail.status == 0 || Model.OrderInOrderDetail.status == 1)
+                                {
+                                    <button type="button"
+                                            class="btn btn-primary"
+                                            data-toggle="modal"
+                                            data-target="#modalCancel">
+
+                                        Hủy đơn hàng
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    @Html.Partial("_SPHoaDonUser", Model.OrderDetails)
+                </div>
+            </div>
+            <div id="chitiet-bottom">
+                <div id="diachi-giao">
+                    <span>Địa chỉ giao hàng</span>
+                    <br />
+                    <span>Tên:<span>  @Model.OrderInOrderDetail.Name </span></span>
+                    <br />
+                    <span><span id="Address-id"> @Model.OrderInOrderDetail.Address</span> </span><span id="thanhpho-id"> @Model.OrderInOrderDetail.City</span>,
+                    <br />
+                    <span>SĐT:<span id="phone-id"> @Model.OrderInOrderDetail.Phone </span></span>
+                    <div>
+                        @if (Model.OrderInOrderDetail.status == 0)
+                        {
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#modalDiaChi">
+                                Chỉnh sửa
+                            </button>
+                        }
+                    </div>
+                </div>
+                <div id="sum-tien" class="row">
+                    <div class="col-6" id="traii">
+                        <span id="Tong-tien">Tổng cộng</span>
+                        <br />
+                        <span>Tạm tính</span>
+                        <br />
+                        <span>Điểm dùng</span>
+                        <br />
+                        <span>Tổng</span>
+                        <br />
+                        <span>Phí vận chuyển</span>
+                        <br />
+                        <span>Thanh toán bằng hình thức</span>
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-4" id="rightt">
+                        <span></span>
+                        <br />
+                        <span><span class="giatri-tamtinh">@String.Format("{0:0,0}", Model.OrderInOrderDetail.ProvisionalAmount) </span> đ</span>
+                        <br />
+                        <span><span class="">@String.Format("{0:0,0}", Model.OrderInOrderDetail.PointsUse) </span> đ</span>
+                        <br />
+                        <span><span class="tong-gtsp">@String.Format("{0:0,0}", Model.OrderInOrderDetail.Total) </span> đ</span>
+                        <br />
+                        <span>0 đ</span>
+                        <br />
+                        <span><span class="tong-gtsp">@String.Format("{0:0,0}", Model.OrderInOrderDetail.Total)</span>đ</span>
+                    </div>
+                </div>
+                @if (Model.OrderInOrderDetail.status == 3)
+                {
+                    <div id="chitiet-bottom" style="height:30px;">
+                        <span>Lý do: <span style="color:red;" id="LyDoHuyDonHang">@Model.OrderInOrderDetail.ReasonCancel</span></span>
+                    <br />
+                        <span>Thời gian hủy đơn hàng : @Model.OrderInOrderDetail.DateProcessing</span>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+        <!--Cập nhật địa chỉ-->
+        <div class="modal fade" id="modalDiaChi" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title" id="exampleModalLongTitle">Cập Nhật Địa Chỉ</h2>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Địa chỉ hiện tại của khách
+                        <div class="row">
+                            <div class="col-3"><b>SDT:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.Phone" name="email1" id="Phone1" required><br />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-3"><b>Địa Chỉ:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.Address" name="DiaChi1" id="DiaChi1" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3"><b>Thành Phố:</b></div>
+                            <div class="col-9">
+                                <input type="text" class="with100" value="@Model.OrderInOrderDetail.City" name="ThanhPho1" id="ThanhPho1" required>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                id="btnEDitDiaChi"
+                                data-idDiaChi="@Model.OrderInOrderDetail.Id">
+                            Lưu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Hủy đơn hàng-->
+        <div id="modalCancel" class="modal fade" role="dialog" tabindex="-1" aria-hidden="true" aria-labelledby="exampleModalCenterTitle">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title">Xác nhận hủy đơn hàng!</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-2">
+                                Lý do
+                            </div>
+                            <div class="col-10">
+                                <input type="text" name="lydo" style="width:100%;" required id="iputLydo" />
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="button"
+                                class="btn btn-primary"
+                                id="btnCancelOrder"
+                                data-idCancel="@Model.OrderInOrderDetail.Id">
+
+                            Lưu
+
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </body>
+</html>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/Toast/Toastr.js"></script>
+<script src="~/Scripts/Toastify/Toaster.js"></script>
+<script src="~/Scripts/Toastify/umd.js"></script>
+<script src="~/Scripts/Toastify/toastify.js"></script>
+<script src="~/Scripts/custom/Customer.js"></script>
+<script src="~/Scripts/custom/Detail.js"></script>

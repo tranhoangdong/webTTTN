@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+
+}
+@model List<CodeFirst1.ViewModels.ThongKe>
+<!DOCTYPE html>
+<link href="~/XuatPhieuCSS/bootstrap.css" rel="stylesheet" />
+<link href="~/XuatPhieuCSS/bootstrap.min.css" rel="stylesheet" />
+<body>
+    <h1 class="text-center">Thống kê số lượng sản phẩm trong kho</h1>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="text-center">Tên sản phẩm</td>
+                        <td class="text-center">Số lượng bán</td>
+                        <td class="text-center">Tổng tiền</td>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@item.tensp</td>
+                            <td class="text-center">@item.slb</td>
+                            <td class="text-center">@String.Format("{0:0,0}", item.tongtien) VNĐ </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td class="text-center"> Tổng số lượng : @Model.Sum(n => n.slb)</td>
+                        <td class="text-center">Tổng tiền : @String.Format("{0:0,0}", Model.Sum(n => n.tongtien)) VNĐ</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
